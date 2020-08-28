@@ -1,0 +1,68 @@
+html, body {
+  padding: 0;
+  margin: 0 auto;
+  min-width: 1000px;
+  background: #282c34;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+* {
+  outline: none;
+}
+
+/**
+ * Loading Animation Snippet
+*/
+
+.loading {
+  height: 20px;
+  margin-top: 2px;
+  color: transparent;
+  background: linear-gradient(100deg, #cccccc6b 20%, #ffffff61 30%, #cccccc6b 70%);
+  background-size: 500%;
+  animation: loading 0.6s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+/**
+ * Custom scrollbar
+*/
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f100;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

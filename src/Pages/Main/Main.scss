@@ -1,0 +1,64 @@
+header.Main {
+    background: #3a404c;
+
+    .search {
+        padding: 10px 5px;
+        margin: 0 auto;
+        width: 960px;
+
+        .search__button {
+            display: inline-block;
+            width: 15%;
+
+            button {
+                width: 100%;
+                background: #ccc;
+                border: 0;
+                border-radius: 2px;
+                padding: 5px 10px;
+                min-width: 70px;
+                transition: box-shadow .3s ease-in-out;
+
+                &:hover {
+                    box-shadow: 0 0 6px 0 #00000052;
+                }
+            }
+        }
+
+        .search__field {
+            display: inline-flex;
+            width: 85%;
+
+            input {
+                width: 100%;
+                padding: 5px 10px;
+                border: 0;
+                margin-right: 5px;
+                border-radius: 2px;
+                transition: box-shadow .15s ease-in;
+
+                &:focus {
+                    box-shadow: inset 0px 0px 4px 0px #282c34;
+                }
+            }
+        }
+    }
+}
+
+main.Main {
+    min-height: 100%;
+    color: white;
+
+    article.content {
+        background: #3a404c;
+        max-width: 1000px;
+        min-height: 100%;
+        margin: 0 auto;
+
+        .issues {
+            margin: 0 auto;
+            max-height: 93vh;
+            overflow: auto;
+        }
+    }
+}

@@ -1,0 +1,36 @@
+.Issue {
+  color: white;
+  border-bottom: 1px solid #282c34;
+  padding: 5px 20px;
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      color: #ccb07d;
+    }
+  }
+
+  .title {
+    display: inline-block;
+    font-weight: bold;
+    width: 80%;
+
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  .user {
+    float: right;
+
+    a {
+      color: wheat;
+
+      &:hover {
+        color: #ccb07d;
+      }
+    }
+  }
+}
