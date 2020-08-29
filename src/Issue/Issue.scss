@@ -3,6 +3,19 @@ div.Issue {
   border-bottom: 1px solid #282c34;
   padding: 5px 20px;
 
+  @media (max-width: 960px) {
+    font-size: 15px;
+    padding: 5px 20px;
+  }
+  
+  @media (max-width: 760px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 550px) {
+    font-size: 13px;
+  }
+
   a {
     color: white;
     text-decoration: none;
@@ -17,6 +30,10 @@ div.Issue {
     font-weight: bold;
     width: 80%;
 
+    @media (max-width: 500px) {
+      width: 100%;
+    }
+
     &:first-letter {
       text-transform: uppercase;
     }
@@ -25,6 +42,11 @@ div.Issue {
   .user {
     float: right;
 
+    @media (max-width: 500px) {
+      float: none;
+      font-size: 12px;
+    }
+    
     a {
       color: wheat;
 
