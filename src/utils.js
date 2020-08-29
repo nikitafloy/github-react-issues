@@ -26,15 +26,15 @@ export default {
         return word;
    },
     bodyToMarkdown: async body => {
-        const res = await axios.post('https://api.github.com/markdown', {
-            "text" : body,
-            "mode" : "markdown",
-            "context" : "none",
-        });
-        if (!res) {
-            console.error(res);
+        try {
+            return await axios.post('https://api.github.com/markdown', {
+                "text" : body,
+                "mode" : "markdown",
+                "context" : "none",
+            });
+        } catch (e) {
+            console.error(e);
             return false;
         };
-        return res;
     },
 };

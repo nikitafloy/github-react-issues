@@ -44,32 +44,34 @@ export const Issue = props => {
           const {url, name, color, description} = labels;
           if (commentsResponse) {
             const gitMarkdown = await utils.bodyToMarkdown(body);
-            if (gitMarkdown) {
-              setState({
-                title,
-                number,
-                user: {
-                  login,
-                  avatar_url,
-                  html_url,
-                },
-                labels: {
-                  url,
-                  name,
-                  color,
-                  description,
-                },
-                state,
-                locked,
-                comments,
-                created_at,
-                updated_at,
-                closed_at,
-                body: gitMarkdown.data,
-                closed_by,
-                comments_active: commentsResponse.data,
-              });
+            if (!gitMarkdown) {
+              return props.history.push('/');
             };
+
+            setState({
+              title,
+              number,
+              user: {
+                login,
+                avatar_url,
+                html_url,
+              },
+              labels: {
+                url,
+                name,
+                color,
+                description,
+              },
+              state,
+              locked,
+              comments,
+              created_at,
+              updated_at,
+              closed_at,
+              body: gitMarkdown.data,
+              closed_by,
+              comments_active: commentsResponse.data,
+            });
           };
         };
       } catch (e) {
@@ -77,7 +79,7 @@ export const Issue = props => {
       };
     };
     fetchData();
-  }, [ISSUES_URL]);
+  }, [ISSUES_URL, props]);
 
   return (
     // Контент с проблемой
