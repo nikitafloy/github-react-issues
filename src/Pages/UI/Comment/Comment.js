@@ -7,19 +7,25 @@ export const Comment = props => {
 
     useEffect(() => {
         const fetchData = async () => {
-            await Promise.all(props.items.map(async item => {
+            const items = await Promise.all(props.items.map(async item => {
                 const res = await utils.bodyToMarkdown(item.body);
                 if (res) {
-                    return res.data;
+                    return {
+                        created_at: item.created_at, 
+                        user: {
+                            login: item.user.login,
+                        }, 
+                        body: res.data,
+                    };
                 } else {
                     console.error(res);
                     return props.globalProps.history.push('/');
                 };
             }));
-            setState({items: props.items});
+            setState({...state, items});
         };
         fetchData();
-    }, [props]);   
+    }, [props, state]);   
 
     return state.items.map((item, key) => (
         <section key={key} className="comment">
