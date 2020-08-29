@@ -36,6 +36,21 @@ article.Issue {
         background: #3a404c;
         padding: 10px 20px;
         margin-right: 15px;
+
+        .body {
+            p {
+                margin: 0 0 10px;
+            }
+        }
+
+        pre {
+            display: block;
+            padding: 10px;
+            font-size: 12px;
+            background: #323742;
+            width: 100%;
+            overflow: auto;
+        }
     }
 
     .comments {

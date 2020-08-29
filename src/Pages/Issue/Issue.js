@@ -43,30 +43,33 @@ export const Issue = props => {
           const {login, avatar_url, html_url} = user;
           const {url, name, color, description} = labels;
           if (commentsResponse) {
-            setState({
-              title,
-              number,
-              user: {
-                login,
-                avatar_url,
-                html_url,
-              },
-              labels: {
-                url,
-                name,
-                color,
-                description,
-              },
-              state,
-              locked,
-              comments,
-              created_at,
-              updated_at,
-              closed_at,
-              body,
-              closed_by,
-              comments_active: commentsResponse.data,
-            });
+            const gitMarkdown = await utils.bodyToMarkdown(body);
+            if (gitMarkdown) {
+              setState({
+                title,
+                number,
+                user: {
+                  login,
+                  avatar_url,
+                  html_url,
+                },
+                labels: {
+                  url,
+                  name,
+                  color,
+                  description,
+                },
+                state,
+                locked,
+                comments,
+                created_at,
+                updated_at,
+                closed_at,
+                body: gitMarkdown.data,
+                closed_by,
+                comments_active: commentsResponse.data,
+              });
+            };
           };
         };
       } catch (e) {
@@ -97,7 +100,7 @@ export const Issue = props => {
         </div>
 
         <div className="issue">
-          {state.body}
+          <div className="body" dangerouslySetInnerHTML={{__html: state.body}}></div>
         </div>
 
         <aside className="comments">
@@ -113,7 +116,7 @@ export const Issue = props => {
             Комментарии к проблеме
           </div>
 
-          <Comment item={state.comments_active}/>
+          <Comment items={state.comments_active} globalProps={props}/>
         </aside>
       </article>
     </main>
