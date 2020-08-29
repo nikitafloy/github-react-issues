@@ -1,0 +1,16 @@
+section.comment {
+    padding-bottom: 10px;
+    width: 100%;
+
+    .title {
+        background: #414856;
+        padding: 10px;
+    }
+
+    .body {
+        background: #3a404c;
+        padding: 5px 10px;
+        color: #d8e0f1;
+        overflow: hidden;
+    }
+}
