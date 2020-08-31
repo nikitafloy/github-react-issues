@@ -12,5 +12,21 @@ section.comment {
         padding: 5px 10px;
         color: #d8e0f1;
         overflow: hidden;
+
+        p {
+            margin: 10px 0;
+
+            @media (max-width: 730px) {
+                font-size: 15px;
+            }    
+        }
+
+        blockquote {
+            background: #323742;
+            margin: 0;
+            padding: 10px 20px;
+            border-left: 3px solid #d8e0f1;
+            margin-bottom: 5px;
+        }
     }
 }

@@ -38,16 +38,16 @@ export const Issue = props => {
       try {
         const issueResponse = await axios(ISSUES_URL);
         if (issueResponse) {
-          const commentsResponse = await axios(issueResponse.data.comments_url);
-          const {title, number, user, labels, state, locked, comments, created_at, updated_at, closed_at, closed_by, body} = issueResponse.data;
+          const {title, number, user, labels, state, locked, comments, created_at, updated_at, closed_at, closed_by, body, comments_url} = issueResponse.data;
           const {login, avatar_url, html_url} = user;
           const {url, name, color, description} = labels;
+          const commentsResponse = await axios(comments_url);
           if (commentsResponse) {
             const gitMarkdown = await utils.bodyToMarkdown(body);
             if (!gitMarkdown) {
               return props.history.push('/');
             };
-
+  
             setState({
               title,
               number,
@@ -79,7 +79,7 @@ export const Issue = props => {
       };
     };
     fetchData();
-  }, [ISSUES_URL, props]);
+  }, []);
 
   return (
     // Контент с проблемой
@@ -88,16 +88,20 @@ export const Issue = props => {
       <article className="Issue">
         <div className="title">
           <div className="title__username">
-            {state.user.login}
+            <a href={state.user.html_url} target="_blank" rel="noopener noreferrer">{state.user.login}</a>
           </div>
          
           <span className="title__title">
             <h1>{state.title}</h1> 
+
             <span className="title__title gray">
               {`#${state.number}`}
             </span>
-            &nbsp; • &nbsp;
-            {`${state.comments} ${utils.formatWordEnd(parseInt(state.comments), {nom: 'комментарий', gen: 'комментария', plu: 'комментариев'})}`}
+
+            <span className="comments">
+              &nbsp; • &nbsp;
+              {`${state.comments} ${utils.formatWordEnd(parseInt(state.comments), {nom: 'комментарий', gen: 'комментария', plu: 'комментариев'})}`}
+            </span>
           </span>
         </div>
 
@@ -108,7 +112,7 @@ export const Issue = props => {
         <aside className="comments">
           <div className="info">
             <div className="author">
-              <b>{state.user.login}</b> написал пост {utils.formatDate(state.created_at)}
+              <b>{<a href={state.user.html_url} target="_blank" rel="noopener noreferrer">{state.user.login}</a>}</b> написал пост {utils.formatDate(state.created_at)}
             </div>            
 
             <button className="url" onClick={() => prompt('URL текущей страницы', ISSUES_URL)}></button>

@@ -19,6 +19,15 @@ code {
     monospace;
 }
 
+a {
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+      color: #d8e0f1;
+  }
+}
+
 * {
   outline: none;
 }

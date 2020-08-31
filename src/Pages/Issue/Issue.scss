@@ -2,11 +2,28 @@ main.Issue {
     width: 960px;
     margin: 0 auto;
     color: white;
+
+    @media (max-width: 965px) {
+        width: auto;
+    }
 }
 
 article.Issue {    
     .title {
         padding: 10px 0;
+
+        @media (max-width: 730px) {
+            padding: 8px 5px;
+        }    
+
+        .comments {
+            margin: 0;
+            vertical-align: text-bottom;
+
+            @media (max-width: 730px) {
+                display: none;
+            }    
+        }
     }
 
     .title__username {
@@ -15,6 +32,10 @@ article.Issue {
         padding: 5px 10px;
         font-size: 14px;
         font-weight: normal;
+
+        @media (max-width: 730px) {
+            padding: 2px 5px;
+        }
     }
 
     .title__title {
@@ -23,10 +44,18 @@ article.Issue {
         h1 {
             display: inline;
             font-size: 16px;
+
+            @media (max-width: 730px) {
+                font-size: 15px;
+            }
         }
 
         .gray {
             color: #ccc;
+
+            @media (max-width: 730px) {
+                font-size: 15px;
+            }
         }
     }
 
@@ -37,19 +66,36 @@ article.Issue {
         padding: 10px 20px;
         margin-right: 15px;
 
+        @media (max-width: 965px) {
+            width: auto;
+            margin-right: 0;
+            padding: 10px 10px;
+        }
+
+        @media (max-width: 730px) {
+            display: block;
+            padding: 5px 5px;
+        }
+
         .body {
             p {
                 margin: 0 0 10px;
+
+                @media (max-width: 730px) {
+                    font-size: 15px;
+                }    
             }
         }
 
         pre {
             display: block;
             padding: 10px;
-            font-size: 12px;
             background: #323742;
-            width: 100%;
             overflow: auto;
+        }
+
+        code {
+            font-size: 12px;
         }
     }
 
@@ -57,6 +103,11 @@ article.Issue {
         display: inline-block;
         vertical-align: top;
         width: 40%;
+
+        @media (max-width: 965px) {
+            width: auto;
+            margin-top: 10px;
+        }
 
         .info {
             background: #323742;
@@ -84,6 +135,10 @@ article.Issue {
         .comments-to-issue {
             font-weight: bold;
             padding: 10px 0 15px;
+
+            @media (max-width: 965px) {
+                padding: 10px 0 15px 5px;
+            }    
         }
     }
 }

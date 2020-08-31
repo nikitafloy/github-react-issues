@@ -7,6 +7,8 @@ TimeAgo.addLocale(ru);
 // cyka blyat
 const timeAgo = new TimeAgo('ru-RU');
 
+let requestsCount = 0;
+
 export default {
     formatDate: date => timeAgo.format(Date.parse(date)).toLowerCase(),
     formatWordEnd: (num, cases) => {
@@ -26,11 +28,21 @@ export default {
         return word;
    },
     bodyToMarkdown: async body => {
+        console.log(`requestsCount: ${requestsCount}`)
+        if (requestsCount > 10) {
+            return console.error('Превышено количество запросов за сессию');
+        };
+        requestsCount++;
+
         try {
             return await axios.post('https://api.github.com/markdown', {
                 "text" : body,
                 "mode" : "markdown",
                 "context" : "none",
+            }, {
+                headers: {
+                    "Authorization": "token e73a8674f86e66b6de244fe01f1c93a21edbcf23",
+                }
             });
         } catch (e) {
             console.error(e);
