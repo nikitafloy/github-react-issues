@@ -1,10 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './Main.scss';
 import axios from 'axios';
-import {Issue} from '../../Issue/Issue';
-
-// const [username, repo] = ['request', 'request'];
-const [username, repo] = ['negezor', 'vk-io'];
+import {Issue} from '../../UI/Issue/Issue';
 
 export const Main = () => {
   const [state, setState] = useState({ 
@@ -17,45 +14,39 @@ export const Main = () => {
     },
   });
 
-  const onChangeHandler = e => {
-    const inputValue = e.target.value;
+  const onChangeHandler = event => {
+    const inputValue = event.target.value;
+    let params = {...state, inputValue, git: {}};
     const matchInputUrl = inputValue.match(/(https|http):\/\/github.com\/(.*)\/(.*)\/issues/);
     if (matchInputUrl) {
       const [username, repo] = [matchInputUrl[2], matchInputUrl[3]];
-      // localStorage.setItem('url', inputValue);
-      setState({...state, inputValue, git: {repo, username}});
-      return;
+      params = {...params, git: {repo, username}};
     };
-    setState({...state, inputValue});
+    setState(params);
   };
 
-  const getIssuesData = () => {
+  const getIssuesData = event => {
+    event.preventDefault();
+
+    if (!state.git) {
+      return;
+    };
+
     const {username, repo} = state.git;
     if (username && repo) {
       setState({...state, loading: true});
-      // https://github.com/negezor/vk-io/issues
       axios(`https://api.github.com/repos/${username}/${repo}/issues`)
-        .then(res => {
-          // const {title, url, comments, comments_url, locked, body, number, state, user, created_at, updated_at} = items;
-          // const {avatar_url, html_url, login} = user;
-          setState({items: res.data, loading: false});
-          // https://github.com/request/request/issues
-        })
+        .then(res => setState({...state, items: res.data, loading: false}))
         .catch(e => console.error(e));
     };
   };
 
-  useEffect(() => {
-
-  });
-
   return (
-    <>
-      <header className="Main">
-        <div className="search">
+    <div className="Main">
+      <header>
+        <form onSubmit={getIssuesData} className="search">
           <div className="search__field">
             <input 
-              type="text" 
               placeholder="Ссылка на issues" 
               onChange={onChangeHandler} 
               value={state.inputValue} 
@@ -64,28 +55,24 @@ export const Main = () => {
           </div>
 
           <div className="search__button">
-            <button onClick={getIssuesData}>Найти</button>
+            <button>Найти</button>
           </div>
-        </div>
+        </form>
       </header>
 
-      { state.items.length || state.loading ? <main className="Main">
-          <article className="content">
-            <div className="issues">
-              { 
-                !state.loading ? state.items.map((item, key) =>
-                  <Issue
-                    key={key}
-                    username={username}
-                    repo={repo}
-                    item={item}
-                  />
-                ): <Issue/>
-              }
-            </div>
+      { state.items.length || state.loading ? 
+        <main className="results-container">
+          <article className="results">
+            { !state.loading ? state.items.map((item, key) =>
+              <Issue
+                key={key}
+                username={state.git.username}
+                repo={state.git.repo}
+                item={item}
+              />
+            ): <Issue/>}
           </article>
-        </main> : null
-      }
-    </>
+        </main> : null }
+    </div>
   );
 };

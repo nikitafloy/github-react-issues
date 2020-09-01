@@ -1,32 +1,35 @@
-section.comment {
+$light_blue: #d8e0f1;
+$third_step_width: 730px;
+
+.Comment {
     padding-bottom: 10px;
     width: 100%;
 
-    .title {
+    &__title {
         background: #414856;
         padding: 10px;
-    }
+    };
 
-    .body {
+    &__body {
         background: #3a404c;
         padding: 5px 10px;
-        color: #d8e0f1;
+        color: $light_blue;
         overflow: hidden;
 
         p {
             margin: 10px 0;
 
-            @media (max-width: 730px) {
+            @media (max-width: $third_step_width) {
                 font-size: 15px;
-            }    
-        }
+            };
+        };
 
         blockquote {
             background: #323742;
             margin: 0;
             padding: 10px 20px;
-            border-left: 3px solid #d8e0f1;
+            border-left: 3px solid $light_blue;
             margin-bottom: 5px;
-        }
-    }
-}
+        };
+    };
+};

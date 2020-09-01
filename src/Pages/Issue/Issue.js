@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import './Issue.scss';
-import axios from "axios";
-import {Comment} from '../UI/Comment/Comment';
+import axios from 'axios';
+import {Comment} from '../../UI/Comment/Comment';
 import utils from '../../utils';
 
 export const Issue = props => {
@@ -29,7 +29,6 @@ export const Issue = props => {
     closed_at: null,
     body: null,
     closed_by: null,
-    
     comments_active: [],
   });
 
@@ -79,52 +78,46 @@ export const Issue = props => {
       };
     };
     fetchData();
-  }, []);
+  }, [ISSUES_URL, props.history]);
 
   return (
-    // Контент с проблемой
     <main className="Issue">
-      {/* Место, где развертывается непосредстенно проблема */}
-      <article className="Issue">
-        <div className="title">
-          <div className="title__username">
+      <article className="header">
+        <div className="header__title">
+          <div className="header__title__username">
             <a href={state.user.html_url} target="_blank" rel="noopener noreferrer">{state.user.login}</a>
           </div>
          
-          <span className="title__title">
+          <span className="header__title__self">
             <h1>{state.title}</h1> 
 
-            <span className="title__title gray">
-              {`#${state.number}`}
+            <span className="header__title__self__number">
+              {` #${state.number}`}
             </span>
 
-            <span className="comments">
+            <span className="header__title__self__comments">
               &nbsp; • &nbsp;
               {`${state.comments} ${utils.formatWordEnd(parseInt(state.comments), {nom: 'комментарий', gen: 'комментария', plu: 'комментариев'})}`}
             </span>
           </span>
         </div>
 
-        <div className="issue">
-          <div className="body" dangerouslySetInnerHTML={{__html: state.body}}></div>
-        </div>
+        <div className="header__body" dangerouslySetInnerHTML={{__html: state.body}}/>
 
-        <aside className="comments">
-          <div className="info">
-            <div className="author">
+        <aside className="header__comments">
+          <div className="header__comments__info">
+            <div className="header__comments__info__author">
               <b>{<a href={state.user.html_url} target="_blank" rel="noopener noreferrer">{state.user.login}</a>}</b> написал пост {utils.formatDate(state.created_at)}
             </div>            
 
-            <button className="url" onClick={() => prompt('URL текущей страницы', ISSUES_URL)}></button>
+            <button className="header__comments__info__url" onClick={() => prompt('URL текущей страницы', ISSUES_URL)}></button>
           </div>
 
-          <div className="comments-to-issue">
-            Комментарии к проблеме
-          </div>
+          <div className="header__comments__to-issue">Комментарии к проблеме</div>
 
           <Comment items={state.comments_active} globalProps={props}/>
         </aside>
       </article>
     </main>
-  )
+  );
 };

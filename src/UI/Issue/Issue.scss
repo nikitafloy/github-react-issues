@@ -1,4 +1,4 @@
-div.Issue {
+.Issue {
   color: white;
   border-bottom: 1px solid #282c34;
   padding: 5px 20px;
@@ -6,15 +6,15 @@ div.Issue {
   @media (max-width: 960px) {
     font-size: 15px;
     padding: 5px 20px;
-  }
+  };
   
   @media (max-width: 760px) {
     font-size: 14px;
-  }
+  };
 
   @media (max-width: 550px) {
     font-size: 13px;
-  }
+  };
 
   a {
     color: white;
@@ -22,37 +22,36 @@ div.Issue {
 
     &:hover {
       color: #ccb07d;
-    }
-  }
+    };
+  };
 
-  .title {
+  &__title {
     display: inline-block;
     font-weight: bold;
-    width: 80%;
 
-    @media (max-width: 500px) {
+    @media (max-width: 690px) {
       width: 100%;
-    }
+    };
 
     &:first-letter {
       text-transform: uppercase;
-    }
-  }
+    };
+  };
 
-  .user {
+  &__username {
     float: right;
 
-    @media (max-width: 500px) {
+    @media (max-width: 690px) {
       float: none;
       font-size: 12px;
-    }
+    };
     
     a {
       color: wheat;
 
       &:hover {
         color: #ccb07d;
-      }
-    }
-  }
-}
+      };
+    };
+  };
+};

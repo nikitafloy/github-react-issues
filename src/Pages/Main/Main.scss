@@ -1,22 +1,34 @@
-header.Main {
-    background: #3a404c;
+$blue: #3a404c;
+$black_with_opacity: #00000072;
+
+$first_step_width: 1000px;
+$second_step_width: 965px;
+$third_step_width: 730px;
+$fourth_step_width: 550px;
+
+$transition_box_shadow: box-shadow .15s ease-in;
+
+.Main {
+    header {
+        background: $blue;
+    };
 
     .search {
         padding: 10px 5px;
         margin: 0 auto;
         width: 960px;
 
-        @media (max-width: 965px) {
+        @media (max-width: $second_step_width) {
             display: table-cell;
-        }
+        };
 
-        .search__button {
+        &__button {
             display: inline-block;
             width: 15%;
 
-            @media (max-width: 965px) {
+            @media (max-width: $second_step_width) {
                 display: none;
-            }
+            };
 
             button {
                 width: 100%;
@@ -25,21 +37,21 @@ header.Main {
                 border-radius: 2px;
                 padding: 5px 10px;
                 min-width: 70px;
-                transition: box-shadow .3s ease-in-out;
+                transition: $transition_box_shadow;
 
                 &:hover {
-                    box-shadow: 0 0 6px 0 #00000052;
-                }
-            }
-        }
+                    box-shadow: 0 0 6px 0 $black_with_opacity;
+                };
+            };
+        };
 
-        .search__field {
+        &__field {
             display: inline-flex;
             width: 85%;
 
-            @media (max-width: 965px) {
+            @media (max-width: $second_step_width) {
                 width: 100%;
-            }
+            };
 
             input {
                 width: 100%;
@@ -47,52 +59,46 @@ header.Main {
                 border: 0;
                 margin-right: 5px;
                 border-radius: 2px;
-                transition: box-shadow .15s ease-in;
+                transition: $transition_box_shadow;
 
-                @media (max-width: 965px) {
+                @media (max-width: $second_step_width) {
                     margin: 0 10px;
                     font-size: 15px;
-                }
+                };
                 
-                @media (max-width: 760px) {
+                @media (max-width: $third_step_width) {
                     font-size: 14px;
-                }
+                };
             
-                @media (max-width: 550px) {
+                @media (max-width: $fourth_step_width) {
                     font-size: 13px;
-                }
+                };
 
                 &:focus {
-                    box-shadow: inset 0px 0px 4px 0px #282c34;
-                }
-            }
-        }
-    }
-}
+                    box-shadow: inset 0px 0px 4px 0px $black_with_opacity;
+                };
+            };
+        };
+    };
 
-main.Main {
-    min-height: 100%;
-    color: white;
-    margin-top: 10px;
-
-    @media (max-width: 1000px) {
-        margin-top: 0;
-    }
-
-    article.content {
-        background: #3a404c;
+    .results-container {
         max-width: 1000px;
         min-height: 100%;
-        margin: 0 auto;
+        margin: 10px auto 0;
+    
+        @media (max-width: $first_step_width) {
+            margin-top: 0;
+        };
 
-        .issues {
+        .results {
+            background: $blue;
             margin: 0 auto;
             max-height: 90vh;
             overflow: auto;
 
-            @media (max-width: 1000px) {
+            @media (max-width: $first_step_width) {
                 max-height: 93vh;
-            }
-        }
-    }
-}
+            };
+        };
+    };
+};
