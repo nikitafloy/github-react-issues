@@ -60,19 +60,20 @@ export const Main = () => {
         </form>
       </header>
 
-      { state.items.length || state.loading ? 
-        <main className="results-container">
-          <article className="results">
-            { !state.loading ? state.items.map((item, key) =>
-              <Issue
-                key={key}
-                username={state.git.username}
-                repo={state.git.repo}
-                item={item}
-              />
-            ): <Issue/>}
-          </article>
-        </main> : null }
+      {
+        state.items.length || state.loading 
+        ? <main className="results-container">
+            <article className="results">
+                <Issue
+                  username={state.git.username}
+                  repo={state.git.repo}
+                  items={state.items}
+                  loading={state.loading}
+                />
+            </article>
+          </main>
+        : null 
+      }
     </div>
   );
 };
