@@ -1,0 +1,84 @@
+@mixin getMediaStyles($type) {
+  @if $type == 'scroll' {
+    @media (max-width: 1000px) {
+      padding: 5px 5px 5px 10px;
+    };
+    
+    @media (max-width: 960px) {
+      font-size: 15px;
+      padding: 5px 10px 5px 15px;
+    };
+      
+    @media (max-width: 550px) {
+      flex-direction: column;
+    };  
+  } @else {
+    @media (max-width: 1000px) {
+      padding: 5px 20px;
+    };
+    
+    @media (max-width: 960px) {
+      font-size: 15px;
+      padding: 5px 15px;
+    };
+  };
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+  };
+};
+
+.Issues {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  border-bottom: 1px solid #282c34;
+  padding: 5px 15px 5px 20px;
+
+  &.scroll {
+    padding: 5px 15px 5px 20px;
+  };
+
+  &.no-scroll {
+    padding: 5px 20px 5px 20px;
+  };
+
+  &.scroll {
+    @include getMediaStyles('scroll');
+  };
+
+  &.no-scroll {
+    @include getMediaStyles('no-scroll');
+  };
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      color: #ccb07d;
+    };
+  };
+
+  &__title {
+    font-weight: bold;
+
+    &:first-letter {
+      text-transform: uppercase;
+    };
+  };
+
+  &__username {
+    @media (max-width: 690px) {
+      font-size: 12px;
+    };
+    
+    a {
+      color: wheat;
+
+      &:hover {
+        color: #ccb07d;
+      };
+    };
+  };
+};

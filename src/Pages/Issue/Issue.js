@@ -32,6 +32,9 @@ export const Issue = props => {
     comments_active: [],
   });
 
+  const body = {__html: state.body};
+  const title = state.title;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,7 +72,7 @@ export const Issue = props => {
               closed_at,
               body: gitMarkdown.data,
               closed_by,
-              comments_active: commentsResponse.data,
+              comments_active: commentsResponse.data.length ? commentsResponse.data : null,
             });
           };
         };
@@ -80,44 +83,69 @@ export const Issue = props => {
     fetchData();
   }, [ISSUES_URL, props.history]);
 
-  return (
-    <main className="Issue">
-      <article className="header">
-        <div className="header__title">
-          <div className="header__title__username">
-            <a href={state.user.html_url} target="_blank" rel="noopener noreferrer">{state.user.login}</a>
-          </div>
-         
-          <span className="header__title__self">
-            <h1>{state.title}</h1> 
+  return (<main className="Issue">
+        <article className="header">
+          <div className="header__title">
+            <div className="header__title__username">
+              {title ? <a href={state.user.html_url} target="_blank" rel="noopener noreferrer">{state.user.login}</a> : <div className="loading_60"/>}
+            </div>
+          
+            <span className="header__title__self">
+              {
+                title
+                  ? <>
+                      <h1>{state.title}</h1> 
 
-            <span className="header__title__self__number">
-              {` #${state.number}`}
+                      <span className="header__title__self__number">{` #${state.number}`}</span>
+
+                      <span className="header__title__self__comments">
+                        &nbsp; • &nbsp;
+                        {`${state.comments} ${utils.formatWordEnd(parseInt(state.comments), {nom: 'комментарий', gen: 'комментария', plu: 'комментариев'})}`}
+                      </span>
+                    </>
+                  : <div className="loading_80"/>
+              }
             </span>
-
-            <span className="header__title__self__comments">
-              &nbsp; • &nbsp;
-              {`${state.comments} ${utils.formatWordEnd(parseInt(state.comments), {nom: 'комментарий', gen: 'комментария', plu: 'комментариев'})}`}
-            </span>
-          </span>
-        </div>
-
-        <div className="header__body" dangerouslySetInnerHTML={{__html: state.body}}/>
-
-        <aside className="header__comments">
-          <div className="header__comments__info">
-            <div className="header__comments__info__author">
-              <b>{<a href={state.user.html_url} target="_blank" rel="noopener noreferrer">{state.user.login}</a>}</b> написал пост {utils.formatDate(state.created_at)}
-            </div>            
-
-            <button className="header__comments__info__url" onClick={() => prompt('URL текущей страницы', ISSUES_URL)}></button>
           </div>
 
-          <div className="header__comments__to-issue">Комментарии к проблеме</div>
+          {
+            title
+              ? <div className="header__body" dangerouslySetInnerHTML={body}/>
+              : <div className="header__body">
+                  <div className="loading_100"></div>
+                  <div className="loading_100"></div>
+                  <div className="loading_100"></div>
+                  <div className="loading_100"></div>
+                  <div className="loading_100"></div>
+                  <div className="loading_100"></div>
+                  <div className="loading_100"></div>
+                </div>
+          }
 
-          <Comment items={state.comments_active} globalProps={props}/>
-        </aside>
-      </article>
+          <aside className="header__comments">
+            <div className="header__comments__info">
+              <div className="header__comments__info__author">
+                {
+                  title
+                    ? <>
+                        <b>
+                          <a href={state.user.html_url} target="_blank" rel="noopener noreferrer">{state.user.login}</a>
+                        </b> написал пост {utils.formatDate(state.created_at)}
+                      </>
+                    : <div className="loading_320"/>
+                }
+              </div>
+
+              <button className="header__comments__info__url" onClick={title ? () => prompt('URL текущей страницы', ISSUES_URL) : null}/>
+            </div>
+
+            <div className="header__comments__to-issue">
+              {title ? state.comments_active ? 'Комментарии к проблеме' : 'Комментариев нет' : <div className="loading_220"/>}
+            </div>
+
+            {state.comments_active ? <Comment items={state.comments_active} globalProps={props}/> : null}
+          </aside>
+        </article>
     </main>
   );
 };

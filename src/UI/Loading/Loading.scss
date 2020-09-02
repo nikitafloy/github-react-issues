@@ -1,13 +1,25 @@
-.loading {
-    height: 20px;
-    margin-top: 2px;
-    color: transparent;
-    background: linear-gradient(100deg, #cccccc6b 20%, #ffffff61 30%, #cccccc6b 70%);
-    background-size: 500%;
-    animation: loading 0.6s ease-in-out infinite;
-    border-radius: 6px;
-    overflow: hidden;
+@mixin loading-style ($width, $unit: 1%) {
+    .loading_#{$width} {
+        display: inline-block!important;
+        margin: 0 2px 2px 0;
+        color: transparent;
+        background: linear-gradient(100deg, #cccccc6b 20%, #ffffff61 30%, #cccccc6b 70%);
+        background-size: 500%;
+        animation: loading 0.6s ease-in-out infinite;
+        border-radius: 6px;
+        height: 1rem;
+        width: #{if($unit == 1%, $width * 1%, #{$width}px)};
+        vertical-align: text-bottom;
+    };
 };
+
+@include loading-style(15);
+@include loading-style(40);
+@include loading-style(60, 'px');
+@include loading-style(80);
+@include loading-style(100);
+@include loading-style(220, 'px');
+@include loading-style(320, 'px');
   
 @keyframes loading {
     0% {

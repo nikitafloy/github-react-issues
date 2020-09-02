@@ -27,13 +27,26 @@ export const Comment = props => {
         fetchData();
     }, [props]);
 
-    return state.items.map((item, key) => (
-        <section key={key} className="Comment">
+    return state.items.length
+        ? state.items.map((item, key) => (
+            <section key={key} className="Comment">
+                <div className="Comment__title">
+                    <b><a href={item.user.html_url} target="_blank" rel="noopener noreferrer">{item.user.login}</a></b> оставил комментарий {utils.formatDate(item.created_at)}
+                </div>
+
+                <div className="Comment__body" dangerouslySetInnerHTML={{__html: item.body}}/>
+            </section>
+          ))
+        : <section className="Comment">
             <div className="Comment__title">
-                <b><a href={item.user.html_url} target="_blank" rel="noopener noreferrer">{item.user.login}</a></b> оставил комментарий {utils.formatDate(item.created_at)}
+                <div className="loading_100"/>
             </div>
 
-            <div className="Comment__body" dangerouslySetInnerHTML={{__html: item.body}}/>
-        </section>
-    ));
+            <div className="Comment__body">
+                <div className="loading_100"/>
+                <div className="loading_100"/>
+                <div className="loading_100"/>
+                <div className="loading_100"/>
+            </div>
+          </section>;
 };

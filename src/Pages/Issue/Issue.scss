@@ -10,16 +10,18 @@ $second_step_width: 965px;
 $third_step_width: 730px;
 
 .Issue {
-    width: 960px;
+    max-width: 960px;
     margin: 0 auto;
     color: white;
-
-    @media (max-width: $first_step_width) {
-        width: auto;
-    };
-
+    
     .header {
+        @media (max-width: $first_step_width) {
+            display: flex;
+            flex-direction: column;
+        };
+    
         &__title {
+            display: flex;
             padding: 10px 0;
 
             @media (max-width: $third_step_width) {
@@ -27,7 +29,7 @@ $third_step_width: 730px;
             };
 
             &__username {
-                display: inline-block;
+                align-self: center;
                 background: $blue;
                 padding: 5px 10px;
                 font-size: $small_font_size;
@@ -39,6 +41,8 @@ $third_step_width: 730px;
             };
 
             &__self {
+                align-self: center;
+                flex-grow: 1;
                 padding: 0 0 0 10px;
     
                 h1 {
@@ -87,7 +91,7 @@ $third_step_width: 730px;
                 padding: 5px 5px;
             };
 
-            p {
+            p, h1, h2, h3, h4 {
                 margin: 0 0 10px;
 
                 @media (max-width: $third_step_width) {

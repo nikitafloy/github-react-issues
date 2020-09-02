@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './Main.scss';
 import axios from 'axios';
-import {Issue} from '../../UI/Issue/Issue';
+import {Issues} from '../../UI/Issues/Issues';
 
 export const Main = () => {
   const [state, setState] = useState({ 
@@ -13,6 +13,15 @@ export const Main = () => {
       username: null, 
     },
   });
+
+  const [wrapperScrolling, setStateScroll] = useState({isScrolling: false});
+  useEffect(() => {
+    let resultWrapper = document.getElementsByClassName('results-wrapper');
+    resultWrapper = resultWrapper[0];
+    if (resultWrapper) {
+      setStateScroll({isScrolling: resultWrapper.clientHeight < resultWrapper.scrollHeight});
+    };
+  }, [state]);
 
   const onChangeHandler = event => {
     const inputValue = event.target.value;
@@ -62,17 +71,20 @@ export const Main = () => {
 
       {
         state.items.length || state.loading 
-        ? <main className="results-container">
-            <article className="results">
-                <Issue
-                  username={state.git.username}
-                  repo={state.git.repo}
-                  items={state.items}
-                  loading={state.loading}
-                />
-            </article>
-          </main>
-        : null 
+          ? <main className="results-container">
+              <article className="results-wrapper">
+                <div className="results">
+                  <Issues
+                    username={state.git.username}
+                    repo={state.git.repo}
+                    items={state.items}
+                    loading={state.loading}
+                    isScrolling={wrapperScrolling.isScrolling}
+                  />
+                </div>
+              </article>
+            </main>
+          : null 
       }
     </div>
   );
