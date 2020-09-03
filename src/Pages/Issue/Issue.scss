@@ -99,13 +99,6 @@ $third_step_width: 730px;
                 };
             };
 
-            pre {
-                display: block;
-                padding: 10px;
-                background: $dark_blue;
-                overflow: auto;
-            };
-
             code {
                 font-size: 12px;
             };
@@ -152,6 +145,26 @@ $third_step_width: 730px;
                     cursor: pointer;
                 };
             };
+        };
+
+        pre {
+            display: block;
+            padding: 10px;
+            overflow: auto;
+        };
+        
+        details {
+            cursor: pointer;
+        };
+        
+        code {
+            display: inline-block;
+            padding: 0.2em 0.4em;
+            border-radius: 5px;
+        };
+        
+        pre, code {
+            background: $dark_blue;
         };
     };
 };
