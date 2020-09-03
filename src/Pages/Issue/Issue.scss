@@ -42,7 +42,8 @@ $third_step_width: 730px;
 
             &__self {
                 align-self: center;
-                flex-grow: 1;
+                flex-basis: 85%;
+                overflow: hidden;
                 padding: 0 0 0 10px;
     
                 h1 {
@@ -165,6 +166,22 @@ $third_step_width: 730px;
         
         pre, code {
             background: $dark_blue;
+        };
+
+        table {
+            background: $dark_blue;
+            border-collapse: collapse;
+        };
+
+        td {
+            padding: 5px;
+            border: 1px solid $blue;
+        };
+
+        th {
+            text-align: center;
+            padding: 5px 10px;
+            border: 1px solid $blue;
         };
     };
 };
