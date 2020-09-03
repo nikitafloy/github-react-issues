@@ -3,6 +3,34 @@ import './Comment.scss';
 import utils from '../../utils';
 
 export const Comment = props => {
+    const {login, repo} = props.globalProps.match.params;
+    const regulars = [
+        {
+            regexp: /(?<= |<[^>]*>)@(\w+)/gm,
+            replace_on: `http://github.com/`,
+        },
+        {
+            regexp: /(?<= |<[^>]*>)#(\d+)/gm,
+            replace_on: `/issues/${login}/${repo}/`,
+        },
+    ];
+
+    const replaceTags = text => {
+        regulars.forEach(item => {
+            let m;
+            const regex = item.regexp;
+            while ((m = regex.exec(text)) !== null) {
+                if (m.index === regex.lastIndex) {
+                    regex.lastIndex++;
+                };
+
+                text = text.replace(m[0], `<a href="${item.replace_on}${m[1]}" target="_blank">${m[0]}</a>`);
+                m = regex.exec(text);
+            };
+        });
+        return text;
+    };
+    
     const [state, setState] = useState({items: []});
     useEffect(state => {
         const fetchData = async () => {
@@ -15,7 +43,7 @@ export const Comment = props => {
                             login: item.user.login,
                             html_url: item.html_url,
                         }, 
-                        body: res.data,
+                        body: replaceTags(res.data),
                     };
                 } else {
                     console.error(res);
