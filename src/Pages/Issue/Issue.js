@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Issue.scss';
 import axios from 'axios';
 import {Comment} from '../../UI/Comment/Comment';
+import {Back} from '../../UI/Back/Back';
 import utils from '../../utils';
 
 export const Issue = props => {
@@ -83,7 +84,10 @@ export const Issue = props => {
     fetchData();
   }, [ISSUES_URL, props.history]);
 
-  return (<main className="Issue">
+  return (<>
+    <Back/>
+
+    <main className="Issue">
         <article className="header">
           <div className="header__title">
             <div className="header__title__username">
@@ -147,5 +151,5 @@ export const Issue = props => {
           </aside>
         </article>
     </main>
-  );
+  </>);
 };

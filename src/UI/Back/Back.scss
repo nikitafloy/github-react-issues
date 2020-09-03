@@ -1,0 +1,17 @@
+.Back {
+    position: fixed;
+    padding: 5px 10px;
+    color: white;
+    font-size: 15px;
+    background: #323742;
+    border: 0;
+    cursor: pointer;
+
+    @media (max-width: 1170px) {
+        position: relative;
+    };
+
+    @media (max-width: 1000px) {
+        width: 100%;
+    };
+};
