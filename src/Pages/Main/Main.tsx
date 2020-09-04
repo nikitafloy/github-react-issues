@@ -1,45 +1,40 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, ChangeEvent, FormEvent} from 'react';
 import './Main.scss';
 import axios from 'axios';
 import {Issues} from '../../UI/Issues/Issues';
+import {IState} from '../../Interfaces/Main/IState';
+import {IScrolling} from '../../Interfaces/Main/IScrolling';
 
 export const Main = () => {
-  const [state, setState] = useState({ 
+  const [state, setState] = useState<IState>({ 
     items: [], 
     loading: false, 
     inputValue: '', 
-    git: { 
-      repo: null,
-      username: null, 
-    },
+    git: {},
   });
 
-  const [wrapperScrolling, setStateScroll] = useState({isScrolling: false});
+  const [wrapperScrolling, setStateScroll] = useState<IScrolling>({isScrolling: false});
   useEffect(() => {
-    let resultWrapper = document.getElementsByClassName('results-wrapper');
-    resultWrapper = resultWrapper[0];
+    const resultWrapperCollection: HTMLCollection = document.getElementsByClassName('results-wrapper');
+    const resultWrapper = resultWrapperCollection[0] as HTMLElement;
     if (resultWrapper) {
       setStateScroll({isScrolling: resultWrapper.clientHeight < resultWrapper.scrollHeight});
     };
   }, [state]);
 
-  const onChangeHandler = event => {
+  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    let params = {...state, inputValue, git: {}};
-    const matchInputUrl = inputValue.match(/(https|http):\/\/github.com\/(.*)\/(.*)\/issues/);
+    let params: IState = {...state, inputValue, git: {}};
+    const matchInputUrl: RegExpMatchArray | null = inputValue.match(/(https|http):\/\/github.com\/(.*)\/(.*)\/issues/);
     if (matchInputUrl) {
-      const [username, repo] = [matchInputUrl[2], matchInputUrl[3]];
+      const [username, repo]: string[] = [matchInputUrl[2], matchInputUrl[3]];
       params = {...params, git: {repo, username}};
     };
     setState(params);
   };
 
-  const getIssuesData = event => {
+  const getIssuesData = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (!state.git) {
-      return;
-    };
 
     const {username, repo} = state.git;
     if (username && repo) {

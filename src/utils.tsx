@@ -9,8 +9,8 @@ const timeAgo = new TimeAgo('ru-RU');
 let requestsCount = 0;
 
 export default {
-    formatDate: date => timeAgo.format(Date.parse(date)).toLowerCase(),
-    formatWordEnd: (num, cases) => {
+    formatDate: (date: string): string => timeAgo.format(Date.parse(date)).toLowerCase(),
+    formatWordEnd: (num: number, cases: {nom: string, gen: string, plu: string}): string => {
         num = Math.abs(num);
         var word = '';
         if (num.toString().indexOf('.') > -1) {
@@ -26,7 +26,7 @@ export default {
         };       
         return word;
    },
-    bodyToMarkdown: async body => {
+   MarkdownToHTML: async (body: string) => {
         console.log(`requestsCount: ${requestsCount}`)
         if (requestsCount > 10) {
             return console.error('Превышено количество запросов за сессию');
