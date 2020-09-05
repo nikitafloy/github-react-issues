@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse, AxiosPromise } from 'axios';
 import TimeAgo from 'javascript-time-ago';
 import ru from 'javascript-time-ago/locale/ru';
  
@@ -7,12 +7,12 @@ TimeAgo.addLocale(ru);
 const timeAgo = new TimeAgo('ru-RU');
 
 let requestsCount = 0;
-
+const [min, max] = [10, 30];
 export default {
     formatDate: (date: string): string => timeAgo.format(Date.parse(date)).toLowerCase(),
     formatWordEnd: (num: number, cases: {nom: string, gen: string, plu: string}): string => {
         num = Math.abs(num);
-        var word = '';
+        let word = '';
         if (num.toString().indexOf('.') > -1) {
             word = cases.gen;
         } else { 
@@ -26,26 +26,29 @@ export default {
         };       
         return word;
    },
-   MarkdownToHTML: async (body: string) => {
-        console.log(`requestsCount: ${requestsCount}`)
-        if (requestsCount > 10) {
-            return console.error('Превышено количество запросов за сессию');
+   markdownToHTML: async (body: string): Promise<string|boolean> => {
+        console.log(`requestsCount: ${requestsCount}`);
+        if (requestsCount > 100) {
+            console.error('Превышено количество запросов в рендере');
+            return false;
         };
         requestsCount++;
 
         try {
-            return await axios.post('https://api.github.com/markdown', {
-                "text" : body,
-                "mode" : "markdown",
-                "context" : "none",
+            const result: AxiosResponse = await axios.post<AxiosPromise>('https://api.github.com/markdown', {
+                'text': body,
+                'mode': 'markdown',
+                'context': 'none',
             }, {
                 headers: {
-                    "Authorization": "token e73a8674f86e66b6de244fe01f1c93a21edbcf23",
-                }
+                    'Authorization': 'token e73a8674f86e66b6de244fe01f1c93a21edbcf23',
+                },
             });
+            return result.data;
         } catch (e) {
             console.error(e);
             return false;
         };
     },
+    randomArray: (): never[] => Array.from({length: 5 + Math.floor(min + Math.random() * (max + 1 - min))}),
 };

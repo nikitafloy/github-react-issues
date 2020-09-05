@@ -4,7 +4,6 @@ $black_with_opacity: #00000072;
 $first_step_width: 1000px;
 $second_step_width: 965px;
 $third_step_width: 730px;
-$fourth_step_width: 550px;
 
 $search_top_height: 25px;
 $transition_box_shadow: box-shadow .15s ease-in;
@@ -72,10 +71,6 @@ $transition_box_shadow: box-shadow .15s ease-in;
                     font-size: 14px;
                 };
             
-                @media (max-width: $fourth_step_width) {
-                    font-size: 13px;
-                };
-
                 &:focus {
                     box-shadow: inset 0px 0px 4px 0px $black_with_opacity;
                 };

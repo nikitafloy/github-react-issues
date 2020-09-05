@@ -1,70 +1,81 @@
 import React, { useEffect, useState } from 'react';
 import './Issue.scss';
-import axios from 'axios';
+import axios, { AxiosResponse, AxiosPromise } from 'axios';
 import utils from '../../utils';
 import { Comment } from '../../UI/Comment/Comment';
 import { Back } from '../../UI/Back/Back';
-import { IIssue, IIssueState, ICommentItems } from '../../Interfaces/Issue/IIssue';
+import { IIssue, IIssueState, ICommentElement } from '../../Interfaces/Pages/Issue/IIssue';
 import { RouteComponentProps } from 'react-router-dom';
 
-export const Issue = (props: RouteComponentProps<IIssue>) => {
+export const Issue = (props: RouteComponentProps<IIssue>): JSX.Element => {
   const {login, repo, id} = props.match.params;
   const ISSUES_URL = `https://api.github.com/repos/${login}/${repo}/issues/${id}`;
-  const [state, setState] = useState<IIssueState>({});
 
-  const body = {__html: state.body!};
-  const title = state.title;
+  const [state, setState] = useState<IIssueState>({});
+  const title: string|undefined = state.title;
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
-        const issueResponse = await axios(ISSUES_URL);
+        const issueResponse: AxiosResponse = await axios.get<AxiosPromise>(ISSUES_URL);
         if (issueResponse) {
-          const {title, number, user, labels, state, locked, comments, created_at, updated_at, closed_at, closed_by, body, comments_url} = issueResponse.data;
+
+          // Destructuring
+
+          // Separate unnecessary data
+          const {title, number, user, labels, state, locked, comments, created_at, updated_at, closed_at, closed_by, comments_url} = issueResponse.data;
+
+          // User
           const {login, avatar_url, html_url} = user;
+
+          // Labels
           const {url, name, color, description} = labels;
-          const commentsResponse = await axios(comments_url);
-          const commentsResponseData: ICommentItems = commentsResponse.data;
-          if (commentsResponseData) {
-            const gitMarkdown = await utils.MarkdownToHTML(body);
-            if (!gitMarkdown) {
-              return props.history.push('/');
-            };
-  
-            setState({
-              title,
-              number,
-              user: {
-                login,
-                avatar_url,
-                html_url,
-              },
-              labels: {
-                url,
-                name,
-                color,
-                description,
-              },
-              state,
-              locked,
-              comments,
-              created_at,
-              updated_at,
-              closed_at,
-              body: gitMarkdown.data,
-              closed_by,
-              comments_active: commentsResponseData ? commentsResponseData : null,
-            });
+
+          // Get comments
+          let comments_active: Array<ICommentElement>|undefined;
+          if (comments !== 0) {
+            const commentsResponse: AxiosResponse = await axios.get<AxiosPromise>(comments_url);
+            comments_active = commentsResponse.data;
           };
+
+          // Get new body - convert markdown to HTML
+          const body: string|boolean = await utils.markdownToHTML(issueResponse.data.body);
+          if (typeof body !== 'string') {
+            // Redirect to Main page
+            return props.history.push('/');
+          };
+
+          setState({
+            // Title
+            title, number, comments,
+
+            // User
+            user: {login, avatar_url, html_url},
+
+            // Labels
+            labels: {url, name, description, color},
+
+            // Issue state
+            state, locked,
+
+            // Status & info
+            created_at, updated_at, closed_at, closed_by,
+
+            // Issue body
+            body,
+
+            // Comments
+            comments_active,
+          });
         };
       } catch (e) {
         console.error(e);
+        return props.history.push('/');
       };
-    };
-    fetchData();
+    })();
   }, [ISSUES_URL, props.history]);
 
-  return (<>
+  return <>
     <Back/>
 
     <main className="Issue">
@@ -78,12 +89,12 @@ export const Issue = (props: RouteComponentProps<IIssue>) => {
               {
                 title
                   ? <>
-                      <h1>{state.title}</h1> 
+                      <h1>{title}</h1> 
 
                       <span className="header__title__self__number">{` #${state.number}`}</span>
 
                       <span className="header__title__self__comments">
-                        {state.comments ? `&nbsp; • &nbsp; ${state.comments} ${utils.formatWordEnd(state.comments, {nom: 'комментарий', gen: 'комментария', plu: 'комментариев'})}` : null}
+                        {state.comments ? ` • ${state.comments} ${utils.formatWordEnd(state.comments, {nom: 'комментарий', gen: 'комментария', plu: 'комментариев'}) as string}` : null}
                       </span>
                     </>
                   : <div className="loading_80"/>
@@ -92,8 +103,8 @@ export const Issue = (props: RouteComponentProps<IIssue>) => {
           </div>
 
           {
-            body.__html
-              ? <div className="header__body" dangerouslySetInnerHTML={body}/>
+            state.body
+              ? <div className="header__body" dangerouslySetInnerHTML={{__html: state.body}}/>
               : <div className="header__body">
                   <div className="loading_100"></div>
                   <div className="loading_100"></div>
@@ -113,7 +124,7 @@ export const Issue = (props: RouteComponentProps<IIssue>) => {
                     ? <>
                         <b>
                           <a href={state.user.html_url} target="_blank" rel="noopener noreferrer">{state.user.login}</a>
-                        </b> написал пост {state.created_at ? utils.formatDate(state.created_at): null}
+                        </b> написал пост {state.created_at ? (utils.formatDate(state.created_at) as string): null}
                       </>
                     : <div className="loading_320"/>
                 }
@@ -130,5 +141,5 @@ export const Issue = (props: RouteComponentProps<IIssue>) => {
           </aside>
         </article>
     </main>
-  </>);
+  </>;
 };

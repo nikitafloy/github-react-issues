@@ -1,6 +1,7 @@
 import regulars from './regulars';
 import utils from '../../utils';
 import { IComment } from '../../Interfaces/UI/Comment/IComment';
+import { ICommentElement } from '../../Interfaces/Pages/Issue/IIssue';
 
 const replaceTags = (text: string, params: {login: string, repo: string}): string => {
     regulars(params.login, params.repo).forEach(item => {
@@ -18,19 +19,19 @@ const replaceTags = (text: string, params: {login: string, repo: string}): strin
     return text;
 };
 
-export default async (props: IComment): Promise<Object> => await Promise.all(props.items.map(async item => {
-    const res = await utils.MarkdownToHTML(item.body);
-    if (res) {
+export default async (props: IComment): Promise<Array<ICommentElement>> => 
+    await Promise.all(props.items.map(async item => {
+        const data: string|boolean = await utils.markdownToHTML(item.body);
+        if (typeof data !== 'string') {
+            props.globalProps.history.push('/');
+        };
+
         return {
             user: {
                 login: item.user.login,
             }, 
             html_url: item.html_url,
             created_at: item.created_at, 
-            body: replaceTags(res.data, props.globalProps.match.params),
+            body: typeof data === 'string' ? replaceTags(data, props.globalProps.match.params) : item.body,
         };
-    } else {
-        console.error(res);
-        setTimeout(props.globalProps.history.push, 5000, '/');
-    };
-}));
+    }));
