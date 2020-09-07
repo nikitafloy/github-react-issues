@@ -3,7 +3,7 @@ import './Back.scss';
 import { NavLink } from 'react-router-dom';
 
 export const Back = (): JSX.Element => (
-  <button className="Back">
+  <button type="button" className="Back">
     <NavLink to="/">На главную</NavLink>
   </button>
 );
