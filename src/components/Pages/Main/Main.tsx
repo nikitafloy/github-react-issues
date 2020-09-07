@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, ChangeEvent, FormEvent, useRef, FC,
+  useState, useEffect, ChangeEvent, FormEvent, useRef, FC, ReactElement,
 } from 'react';
 
 // CSS
@@ -17,7 +17,7 @@ import { IState } from '../../../TypeScript/Pages/Main/State';
 import { Scrolling } from '../../../TypeScript/Pages/Main/Scrolling';
 
 const EXAMPLE_URL = 'https://github.com/negezor/vk-io/issues';
-export const Main: FC = (): JSX.Element => {
+export const Main: FC = (): ReactElement => {
   const wrapperRef = useRef<HTMLElement>(null);
   const [wrapperScrolling, setStateScroll] = useState<Scrolling>({ isScrolling: false });
   const [state, setState] = useState<IState>({ loading: false, inputValue: '' });

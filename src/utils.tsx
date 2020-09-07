@@ -12,11 +12,13 @@ const [min, max] = [10, 30];
 export default {
   formatDate: (date: string): string => timeAgo.format(Date.parse(date)).toLowerCase(),
   formatWordEnd: (num: number, cases: { nom: string; gen: string; plu: string }): string => {
+    // eslint-disable-next-line no-param-reassign
     num = Math.abs(num);
     let word = '';
     if (num.toString().indexOf('.') > -1) {
       word = cases.gen;
     } else {
+      // eslint-disable-next-line no-nested-ternary
       word = num % 10 === 1 && num % 100 !== 11
         ? cases.nom
         : num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20)
@@ -26,12 +28,12 @@ export default {
     return word;
   },
   markdownToHTML: async (body: string): Promise<string | boolean> => {
+    // eslint-disable-next-line no-console
     console.log(`requestsCount: ${requestsCount}`);
     if (requestsCount > 100) {
-      console.error('Превышено количество запросов в рендере');
-      return false;
+      throw new Error('Превышено количество запросов в рендере');
     }
-    requestsCount++;
+    requestsCount += 1;
 
     try {
       const data: markdownPostQueryData = {
@@ -51,9 +53,10 @@ export default {
       );
       return result.data;
     } catch (e) {
-      console.error(e);
-      return false;
+      throw new Error(e);
     }
   },
-  randomArray: (): never[] => Array.from({ length: 5 + Math.floor(min + Math.random() * (max + 1 - min)) }),
+  randomArray: (): never[] => Array.from({
+    length: 5 + Math.floor(min + Math.random() * (max + 1 - min)),
+  }),
 };

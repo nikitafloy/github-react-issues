@@ -1,4 +1,9 @@
-import React, { useEffect, useState, FC } from 'react';
+import React, {
+  useEffect,
+  useState,
+  FC,
+  ReactElement,
+} from 'react';
 import './Comment.scss';
 
 // Utils
@@ -9,7 +14,7 @@ import bodyToMarkdown from './utils';
 import { CommentType, CommentState } from '../../../TypeScript/UI/Comment/Comment';
 import { CommentElement } from '../../../TypeScript/Pages/Issue/Issue';
 
-export const Comment: FC<CommentType> = (props: CommentType): JSX.Element => {
+export const Comment: FC<CommentType> = (props: CommentType): ReactElement => {
   const [state, setState] = useState<CommentState>({ items: [] });
   useEffect(() => {
     (async (): Promise<void> => {

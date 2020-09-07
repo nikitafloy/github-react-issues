@@ -1,4 +1,9 @@
-import React, { useEffect, useState, FC } from 'react';
+import React, {
+  useEffect,
+  useState,
+  FC,
+  ReactElement,
+} from 'react';
 import './Issue.scss';
 import axios, { AxiosResponse, AxiosPromise } from 'axios';
 import { RouteComponentProps } from 'react-router-dom';
@@ -19,7 +24,9 @@ import {
   IssueLabels,
 } from '../../../TypeScript/Pages/Issue/Issue';
 
-export const Issue: FC<RouteComponentProps<IssueType>> = (props: RouteComponentProps<IssueType>): JSX.Element => {
+export const Issue: FC<RouteComponentProps<IssueType>> = (
+  props: RouteComponentProps<IssueType>,
+): ReactElement => {
   const {
     match: {
       params: { login, repo, id },
@@ -107,7 +114,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (props: RouteComponentP
     // eslint-disable-next-line
   }, [ISSUES_URL, history]);
 
-  const renderLabels = (): JSX.Element | null => {
+  const renderLabels = (): ReactElement | null => {
     const stateLabels = state.labels;
     if (stateLabels && stateLabels.length) {
       const labels: string = stateLabels.map((item: IssueLabels) => item.name).join(', ');
@@ -116,7 +123,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (props: RouteComponentP
     return null;
   };
 
-  const renderStatus = (): JSX.Element | null => (state.state === 'closed' ? (
+  const renderStatus = (): ReactElement | null => (state.state === 'closed' ? (
     <div className="header__status">
       {state.closed_at ? `Вопрос закрыт ${utils.formatDate(state.closed_at)}` : null}
     </div>

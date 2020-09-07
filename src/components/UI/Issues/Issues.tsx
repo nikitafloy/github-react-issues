@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactElement } from 'react';
 import './Issues.scss';
 import { NavLink } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ import utils from '../../../utils';
 import { IssuesProps } from '../../../TypeScript/UI/Issues/Issues';
 import { StateItems } from '../../../TypeScript/Pages/Main/State';
 
-export const Issues: FC<IssuesProps> = (props: IssuesProps): JSX.Element => {
+export const Issues: FC<IssuesProps> = (props: IssuesProps): ReactElement => {
   const {
     username, repo, items, loading,
   } = props;
