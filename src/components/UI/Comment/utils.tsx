@@ -1,5 +1,8 @@
+// Utils
 import regulars from './regulars';
 import utils from '../../../utils';
+
+// TypeScript
 import { CommentType } from '../../../TypeScript/UI/Comment/Comment';
 import { CommentElement } from '../../../TypeScript/Pages/Issue/Issue';
 import { RegularsItem } from '../../../TypeScript/UI/Comment/regulars';
@@ -8,11 +11,13 @@ const replaceTags = (text: string, params: { login: string; repo: string }): str
   (regulars(params.login, params.repo) as Array<RegularsItem>).forEach((item) => {
     let m;
     const regex = item.regexp;
+    // eslint-disable-next-line no-cond-assign
     while ((m = regex.exec(text)) !== null) {
       if (m.index === regex.lastIndex) {
-        regex.lastIndex++;
+        regex.lastIndex += 1;
       }
 
+      // eslint-disable-next-line no-param-reassign
       text = text.replace(m[0], `<a href="${item.replace_on}${m[1]}" target="_blank">${m[0]}</a>`);
       m = regex.exec(text);
     }
@@ -20,6 +25,7 @@ const replaceTags = (text: string, params: { login: string; repo: string }): str
   return text;
 };
 
+// eslint-disable-next-line no-return-await
 export default async (props: CommentType): Promise<Array<CommentElement>> => await Promise.all(
   props.items.map(async (item) => {
     const data: string | boolean = await utils.markdownToHTML(item.body);
