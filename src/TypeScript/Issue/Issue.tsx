@@ -1,10 +1,10 @@
-export type IIssue = {
+export type IssueType = {
   login: string;
   repo: string;
   id: string;
 };
 
-export type IIssueState = {
+export type IssueState = {
   title?: string;
   number?: number;
   user?: {
