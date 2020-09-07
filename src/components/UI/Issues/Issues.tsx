@@ -9,17 +9,20 @@ import utils from '../../../utils';
 import { IssuesProps } from '../../../TypeScript/UI/Issues/Issues';
 import { StateItems } from '../../../TypeScript/Pages/Main/State';
 
-export const Issues: FC<IssuesProps> = (props: IssuesProps): ReactElement => {
-  const {
-    username, repo, items, loading,
-  } = props;
+export const Issues: FC<IssuesProps> = ({
+  username,
+  repo,
+  items,
+  loading,
+  isScrolling,
+}: IssuesProps): ReactElement => {
   const issuesList: Array<StateItems> | never[] = items === undefined || loading
     ? utils.randomArray() : items;
 
   return (
     <>
       {issuesList.map((item, key) => (
-        <div key={key} className={`Issues ${props.isScrolling ? 'scroll' : 'no-scroll'}`}>
+        <div key={key} className={`Issues ${isScrolling ? 'scroll' : 'no-scroll'}`}>
           <div className={`Issues__title ${loading ? 'loading_80' : ''}`}>
             {item && item.title ? (
               <NavLink to={`/issues/${username}/${repo}/${item.number}`}>{item.title}</NavLink>
