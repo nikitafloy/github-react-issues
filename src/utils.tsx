@@ -1,5 +1,6 @@
 import axios, { AxiosResponse, AxiosPromise } from 'axios';
 import TimeAgo from 'javascript-time-ago';
+// eslint-disable-next-line import/no-unresolved
 import ru from 'javascript-time-ago/locale/ru';
 import { markdownPostQueryData, markdownPostQueryConfig } from './TypeScript/utils';
 
