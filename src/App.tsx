@@ -1,12 +1,12 @@
-import React from 'react';
-import './Pages/Main/Main.scss';
-import {Switch, Route, Redirect} from 'react-router-dom';
-import {Main} from './Pages/Main/Main';
-import {Issue} from "./Pages/Issue/Issue";
+import React, { FC } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { Main } from './components/Pages/Main/Main';
+import { Issue } from './components/Pages/Issue/Issue';
 
-export default (): JSX.Element => 
+export const App: FC = (): JSX.Element => (
   <Switch>
-    <Route path="/issues/:login/:repo/:id" exact component={Issue}/>
-    <Route path="/" exact component={Main}/>
-    <Redirect to="/"/>
-  </Switch>;
+    <Route path="/issues/:login/:repo/:id" exact component={Issue} />
+    <Route path="/" exact component={Main} />
+    <Redirect to="/" />
+  </Switch>
+);
