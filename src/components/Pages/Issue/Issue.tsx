@@ -11,7 +11,7 @@ import url from '../../../icons/url.svg';
 import { Comment } from '../../UI/Comment/Comment';
 import { Back } from '../../UI/Back/Back';
 
-// Types
+// TypeScript
 import {
   IssueType,
   IssueState,
@@ -52,27 +52,6 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (props: RouteComponentP
             closed_at,
             comments_url,
           } = issueResponse.data;
-
-          // const labels = [
-          //   {
-          //     "id": 329939541,
-          //     "node_id": "MDU6TGFiZWwzMjk5Mzk1NDE=",
-          //     "url": "https://api.github.com/repos/negezor/vk-io/labels/help%20wanted",
-          //     "name": "help wanted",
-          //     "color": "159818",
-          //     "default": true,
-          //     "description": null
-          //   },
-          //   {
-          //     "id": 329939538,
-          //     "node_id": "MDU6TGFiZWwzMjk5Mzk1Mzg=",
-          //     "url": "https://api.github.com/repos/negezor/vk-io/labels/bug",
-          //     "name": "bug",
-          //     "color": "fc2929",
-          //     "default": true,
-          //     "description": null
-          //   }
-          // ]
 
           // User
           const { login, avatar_url, html_url } = user;
