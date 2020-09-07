@@ -40,7 +40,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
   const { history } = props;
 
   useEffect(() => {
-    (async (): Promise<unknown> => {
+    (async (): Promise<void|undefined|never> => {
       try {
         const issueResponse: AxiosResponse = await axios.get<AxiosPromise>(ISSUES_URL);
         if (issueResponse) {
