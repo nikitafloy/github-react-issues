@@ -1,6 +1,6 @@
 import { StateItems } from '../../Pages/Main/State';
 
-export type IssuesParams = {
+export type IssuesProps = {
   username?: string;
   repo?: string;
   items?: Array<StateItems>;
