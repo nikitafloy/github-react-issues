@@ -1,12 +1,20 @@
 import React, {
   useState, useEffect, ChangeEvent, FormEvent, useRef, FC,
 } from 'react';
+
+// CSS
 import './Main.scss';
+import '../../UI/Loading/Loading.scss';
+
+// Axios
 import axios, { AxiosResponse, AxiosError, AxiosPromise } from 'axios';
+
+// UI
 import { Issues } from '../../UI/Issues/Issues';
+
+// Typescript
 import { IState } from '../../../TypeScript/Pages/Main/State';
 import { Scrolling } from '../../../TypeScript/Pages/Main/Scrolling';
-import '../../UI/Loading/Loading.scss';
 
 const EXAMPLE_URL = 'https://github.com/negezor/vk-io/issues';
 export const Main: FC = (): JSX.Element => {
