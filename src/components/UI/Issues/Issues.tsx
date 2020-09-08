@@ -22,7 +22,7 @@ export const Issues: FC<IssuesProps & antiChildren> = ({
 
   return (
     <>
-      {issuesList.map((item, key) => (
+      {(issuesList as Array<StateItems>).map((item, key) => (
         <div key={key} className={`Issues ${isScrolling ? 'scroll' : 'no-scroll'}`}>
           <div className={`Issues__title ${loading ? 'loading_80' : ''}`}>
             {item && item.title ? (
