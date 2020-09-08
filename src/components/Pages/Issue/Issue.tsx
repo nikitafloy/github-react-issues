@@ -107,7 +107,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
         throw new Error(e);
       }
     })();
-    // I or React dont know about destructuring (react ask props.history)
+    // I or React dont know about destructuring (React ask props.history)
     // eslint-disable-next-line
   }, [ISSUES_URL, history]);
 
@@ -125,6 +125,16 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
       {state.closed_at ? `Вопрос закрыт ${utils.formatDate(state.closed_at)}` : null}
     </div>
   ) : null);
+
+  const renderCommentsExist = (): string | ReactElement => {
+    if (title) {
+      if (state.comments_active) {
+        return 'Комментарии к проблеме';
+      }
+      return 'Комментариев нет';
+    }
+    return <div className="loading_220" />;
+  };
 
   return (
     <>
@@ -216,20 +226,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
               </button>
             </div>
 
-            <div className="header__comments__to-issue">
-              {
-                // eslint-disable-next-line no-nested-ternary
-                title ? (
-                  state.comments_active ? (
-                    'Комментарии к проблеме'
-                  ) : (
-                    'Комментариев нет'
-                  )
-                ) : (
-                  <div className="loading_220" />
-                )
-              }
-            </div>
+            <div className="header__comments__to-issue">{renderCommentsExist()}</div>
 
             {state.comments_active ? (
               <Comment items={state.comments_active} globalProps={props} />
