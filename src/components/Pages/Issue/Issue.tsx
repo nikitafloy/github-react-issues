@@ -70,7 +70,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
           // Get comments
           let comments_active: Array<CommentElement> | undefined;
           if (comments !== 0) {
-            const commentsResponse: AxiosResponse = await axios.get<AxiosPromise>(comments_url);
+            const commentsResponse: AxiosResponse = await axios.get(comments_url);
             comments_active = commentsResponse.data;
           }
 
@@ -120,11 +120,14 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
 
   const renderLabels = (): ReactElement | null => {
     const stateLabels = state.labels;
-    if (stateLabels && stateLabels.length) {
-      const labels: string = stateLabels.map((item: IssueLabels) => item.name).join(', ');
-      return <div className="header__title__label">{labels}</div>;
+    if (stateLabels) {
+      if (stateLabels.length) {
+        const labels: string = stateLabels.map((item: IssueLabels) => item.name).join(', ');
+        return <div className="header__title__label">{labels}</div>;
+      }
+      return null;
     }
-    return null;
+    return <div className="header__title__label"><div className="loading_60" /></div>;
   };
 
   const renderStatus = (): ReactElement | null => (state.state === 'closed' ? (
@@ -217,13 +220,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
             </>
           ) : (
             <div className="header__body">
-              <div className="loading_100" />
-              <div className="loading_100" />
-              <div className="loading_100" />
-              <div className="loading_100" />
-              <div className="loading_100" />
-              <div className="loading_100" />
-              <div className="loading_100" />
+              {Array.from({ length: 6 }, (_, k) => (<div key={`ke ${k}`} className="loading_100" />))}
             </div>
           )}
 

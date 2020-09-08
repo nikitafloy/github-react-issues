@@ -17,8 +17,7 @@ export const Issues: FC<IssuesProps & antiChildren> = ({
   loading,
   isScrolling,
 }: IssuesProps): ReactElement => {
-  const issuesList: Array<StateItems> | never[] = items === undefined || loading
-    ? utils.randomArray() : items;
+  const issuesList: Array<StateItems> | never[] = items === undefined || loading ? utils.randomArray() : items;
 
   return (
     <>
