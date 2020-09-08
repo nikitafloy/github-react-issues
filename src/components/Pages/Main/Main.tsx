@@ -19,27 +19,32 @@ import axios, { AxiosResponse, AxiosError, AxiosPromise } from 'axios';
 import { Issues } from '../../UI/Issues/Issues';
 
 // Typescript
-import { IState } from '../../../TypeScript/Pages/Main/State';
-import { Scrolling } from '../../../TypeScript/Pages/Main/Scrolling';
+import { MainState } from '../../../TypeScript/Pages/Main/State';
 
 const EXAMPLE_URL = 'https://github.com/negezor/vk-io/issues';
 export const Main: FC = (): ReactElement => {
   const wrapperRef = useRef<HTMLElement>(null);
-  const [wrapperScrolling, setStateScroll] = useState<Scrolling>({ isScrolling: false });
-  const [state, setState] = useState<IState>({ loading: false, inputValue: '' });
+  const [state, setState] = useState<MainState>({
+    loading: false,
+    inputValue: '',
+    isScrolling: false,
+  });
 
   useEffect(() => {
     if (wrapperRef.current instanceof HTMLElement) {
       const resultWrapper: HTMLElement = wrapperRef.current;
       if (resultWrapper) {
-        setStateScroll({ isScrolling: resultWrapper.clientHeight < resultWrapper.scrollHeight });
+        setState((prevState) => ({
+          ...prevState,
+          isScrolling: resultWrapper.clientHeight < resultWrapper.scrollHeight,
+        }));
       }
     }
   }, [state.loading]);
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
     const inputValue: string = event.target.value;
-    let params: IState = { ...state, inputValue, git: {} };
+    let params: MainState = { ...state, inputValue, git: {} };
     const matchInputUrl: RegExpMatchArray | null = inputValue.match(
       /(https|http):\/\/github.com\/(.*)\/(.*)\/issues/,
     );
@@ -104,7 +109,7 @@ export const Main: FC = (): ReactElement => {
                 repo={state.git.repo}
                 items={state.items}
                 loading={state.loading}
-                isScrolling={wrapperScrolling.isScrolling}
+                isScrolling={state.isScrolling}
               />
             </div>
           </article>

@@ -7,10 +7,11 @@ export type StateItems = {
   };
 };
 
-export type IState = {
+export type MainState = {
   items?: Array<StateItems>;
   loading: boolean;
   inputValue: string;
+  isScrolling: boolean;
   git?: {
     repo?: string;
     username?: string;
