@@ -130,35 +130,50 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
     return <div className="header__title__label"><div className="loading_60" /></div>;
   };
 
-  const renderStatus = (): ReactElement | null => (state.state === 'closed' ? (
-    <div className="header__status">
-      {state.closed_at ? `${words.ISSUE_CLOSED_AT} ${utils.formatDate(state.closed_at)}` : null}
-    </div>
-  ) : null);
+  const renderStatus = (): ReactElement | null => {
+    if (state.state === 'closed') {
+      return (
+        <div className="header__status">
+          {state.closed_at ? `${words.ISSUE_CLOSED_AT} ${utils.formatDate(state.closed_at)}` : null}
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const renderBody = (): ReactElement => {
+    // eslint-disable-next-line react/no-danger
+    if (state.body) return <div className="header__body" dangerouslySetInnerHTML={{ __html: state.body }} />;
+
+    return (
+      <div className="header__body">
+        {Array.from({ length: 6 }, (_, k) => (<div key={`loading-${k}`} className="loading_100" />))}
+      </div>
+    );
+  };
 
   const renderCommentsExist = (): string | ReactElement => {
+    // Its ok, title loading with comments
     if (title) {
       if (state.comments_active) {
-        return words.COMMENTS_TO_ISSUE as string;
+        return words.COMMENTS_TO_ISSUE;
       }
-      return words.NO_COMMENTS as string;
+      return words.NO_COMMENTS;
     }
     return <div className="loading_220" />;
   };
 
-  const renderWritePost = (): ReactElement => {
+  const renderWhoWritePost = (): ReactElement => {
+    const createdAt = state.created_at;
     if (state.user) {
+      const { login, html_url } = state.user;
       return (
         <>
-          <b>
-            <a href={state.user.html_url} target="_blank" rel="noopener noreferrer">
-              {state.user.login}
-            </a>
-          </b>
-          {' '}
-          {words.WRITE_POST}
-          {' '}
-          {state.created_at ? (utils.formatDate(state.created_at) as string) : null}
+          <a href={html_url} target="_blank" rel="noopener noreferrer">{login}</a>
+
+          {` ${words.WRITE_POST} `}
+
+          {createdAt ? (utils.formatDate(createdAt)) : null}
         </>
       );
     }
@@ -166,10 +181,8 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
   };
 
   const onClickHandler = (): string | null => {
-    if (title) {
-      // eslint-disable-next-line no-alert
-      return prompt(words.URL_CURRENT_PAGE, ISSUES_URL);
-    }
+    // eslint-disable-next-line no-alert
+    if (title) return prompt(words.URL_CURRENT_PAGE, ISSUES_URL);
     return null;
   };
 
@@ -183,65 +196,52 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
             {renderLabels()}
 
             <div className="header__title__username">
-              {state.user ? (
-                <a href={state.user.html_url} target="_blank" rel="noopener noreferrer">
-                  {state.user.login}
-                </a>
-              ) : (
-                <div className="loading_60" />
-              )}
+              {state.user
+                ? (
+                  <a
+                    href={state.user.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {state.user.login}
+                  </a>
+                )
+                : <div className="loading_60" />}
             </div>
 
             <span className="header__title__self">
-              {title ? (
-                <>
-                  <h1>{title}</h1>
+              {title
+                ? (
+                  <>
+                    <h1>{title}</h1>
 
-                  <span className="header__title__self__number">{` #${state.number}`}</span>
+                    <span className="header__title__self__number">{` #${state.number}`}</span>
 
-                  <span className="header__title__self__comments">
-                    {state.comments
-                      ? ` • ${state.comments} ${
-                          utils.formatWordEnd(state.comments, words.END_OF_WORDS.comments) as string
-                      }`
-                      : null}
-                  </span>
-                </>
-              ) : (
-                <div className="loading_80" />
-              )}
+                    <span className="header__title__self__comments">
+                      {state.comments
+                        ? ` • ${state.comments} ${utils.formatWordEnd(state.comments, words.END_OF_WORDS.comments)}`
+                        : null}
+                    </span>
+                  </>
+                ) : <div className="loading_80" />}
             </span>
           </div>
 
-          {state.body ? (
-            <>
-              {renderStatus()}
-              <div className="header__body" dangerouslySetInnerHTML={{ __html: state.body }} />
-            </>
-          ) : (
-            <div className="header__body">
-              {Array.from({ length: 6 }, (_, k) => (<div key={`ke ${k}`} className="loading_100" />))}
-            </div>
-          )}
+          {renderStatus()}
+          {renderBody()}
 
           <aside className="header__comments">
             <div className="header__comments__info">
-              <div className="header__comments__info__author">{renderWritePost()}</div>
+              <div className="header__comments__info__author">{renderWhoWritePost()}</div>
 
-              <button
-                type="button"
-                className="header__comments__info__url"
-                onClick={onClickHandler}
-              >
+              <button type="button" className="header__comments__info__url" onClick={onClickHandler}>
                 <img src={url} alt={words.URL_ON_ISSUE} />
               </button>
             </div>
 
             <div className="header__comments__to-issue">{renderCommentsExist()}</div>
 
-            {state.comments_active ? (
-              <Comment items={state.comments_active} globalProps={props} />
-            ) : null}
+            {state.comments_active ? <Comment items={state.comments_active} gProps={props} /> : null}
           </aside>
         </article>
       </main>

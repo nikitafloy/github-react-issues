@@ -30,7 +30,7 @@ export default async (props: CommentType): Promise<Array<CommentElement>> => awa
   props.items.map(async (item) => {
     const data: string | boolean = await utils.markdownToHTML(item.body);
     if (typeof data !== 'string') {
-      props.globalProps.history.push('/');
+      props.gProps.history.push('/');
     }
 
     return {
@@ -41,7 +41,7 @@ export default async (props: CommentType): Promise<Array<CommentElement>> => awa
       created_at: item.created_at,
       body:
           typeof data === 'string'
-            ? (replaceTags(data, props.globalProps.match.params) as string)
+            ? (replaceTags(data, props.gProps.match.params) as string)
             : item.body,
     };
   }),

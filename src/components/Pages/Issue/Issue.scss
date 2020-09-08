@@ -168,6 +168,10 @@ $third_step_width: 730px;
                 &__author {
                     display: inline-block;
                     padding: 10px;
+
+                    a {
+                        font-weight: bold;
+                    };
                 };
 
                 &__url {

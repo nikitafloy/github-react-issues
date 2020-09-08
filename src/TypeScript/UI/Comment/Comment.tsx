@@ -7,6 +7,6 @@ export type CommentState = {
 };
 
 export type CommentProps = {
-  globalProps: RouteComponentProps<IssueType>;
+  gProps: RouteComponentProps<IssueType>;
 };
 export type CommentType = CommentState & CommentProps & antiChildren;
