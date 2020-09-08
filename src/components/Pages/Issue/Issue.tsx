@@ -21,6 +21,9 @@ import {
   IssueLabels,
 } from '../../../TypeScript/Pages/Issue/Issue';
 
+// Words
+import words from '../../../words';
+
 export const Issue: FC<RouteComponentProps<IssueType>> = (
   props: RouteComponentProps<IssueType>,
 ): ReactElement => {
@@ -122,18 +125,45 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
 
   const renderStatus = (): ReactElement | null => (state.state === 'closed' ? (
     <div className="header__status">
-      {state.closed_at ? `Вопрос закрыт ${utils.formatDate(state.closed_at) as string}` : null}
+      {state.closed_at ? `${words.ISSUE_CLOSED_AT} ${utils.formatDate(state.closed_at)}` : null}
     </div>
   ) : null);
 
   const renderCommentsExist = (): string | ReactElement => {
     if (title) {
       if (state.comments_active) {
-        return 'Комментарии к проблеме';
+        return words.COMMENTS_TO_ISSUE as string;
       }
-      return 'Комментариев нет';
+      return words.NO_COMMENTS as string;
     }
     return <div className="loading_220" />;
+  };
+
+  const renderWritePost = (): ReactElement => {
+    if (state.user) {
+      return (
+        <>
+          <b>
+            <a href={state.user.html_url} target="_blank" rel="noopener noreferrer">
+              {state.user.login}
+            </a>
+          </b>
+          {' '}
+          {words.WRITE_POST}
+          {' '}
+          {state.created_at ? (utils.formatDate(state.created_at) as string) : null}
+        </>
+      );
+    }
+    return <div className="loading_320" />;
+  };
+
+  const onClickHandler = (): string | null => {
+    if (title) {
+      // eslint-disable-next-line no-alert
+      return prompt(words.URL_CURRENT_PAGE, ISSUES_URL);
+    }
+    return null;
   };
 
   return (
@@ -165,11 +195,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
                   <span className="header__title__self__comments">
                     {state.comments
                       ? ` • ${state.comments} ${
-                          utils.formatWordEnd(state.comments, {
-                            nom: 'комментарий',
-                            gen: 'комментария',
-                            plu: 'комментариев',
-                          }) as string
+                          utils.formatWordEnd(state.comments, words.END_OF_WORDS.comments) as string
                       }`
                       : null}
                   </span>
@@ -199,30 +225,14 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
 
           <aside className="header__comments">
             <div className="header__comments__info">
-              <div className="header__comments__info__author">
-                {state.user ? (
-                  <>
-                    <b>
-                      <a href={state.user.html_url} target="_blank" rel="noopener noreferrer">
-                        {state.user.login}
-                      </a>
-                    </b>
-                    {' '}
-                    написал пост
-                    {' '}
-                    {state.created_at ? (utils.formatDate(state.created_at) as string) : null}
-                  </>
-                ) : (
-                  <div className="loading_320" />
-                )}
-              </div>
+              <div className="header__comments__info__author">{renderWritePost()}</div>
 
               <button
                 type="button"
                 className="header__comments__info__url"
-                onClick={(): string | null => (title ? prompt('URL текущей страницы', ISSUES_URL) : null)}
+                onClick={onClickHandler}
               >
-                <img src={url} alt="Ссылка на issue" />
+                <img src={url} alt={words.URL_ON_ISSUE} />
               </button>
             </div>
 

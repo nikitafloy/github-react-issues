@@ -21,6 +21,9 @@ import { Issues } from '../../UI/Issues/Issues';
 // Typescript
 import { MainState } from '../../../TypeScript/Pages/Main/State';
 
+// Words
+import words from '../../../words';
+
 const EXAMPLE_URL = 'https://github.com/negezor/vk-io/issues';
 export const Main: FC = (): ReactElement => {
   const wrapperRef = useRef<HTMLElement>(null);
@@ -84,7 +87,7 @@ export const Main: FC = (): ReactElement => {
         <form onSubmit={getIssuesData} className="search">
           <div className="search__field">
             <input
-              placeholder={`Введите ссылку на issues, например: ${EXAMPLE_URL}`}
+              placeholder={`${words.ENTER_URL_ISSUE_EXAMPLE}: ${EXAMPLE_URL}`}
               onChange={onChangeHandler}
               value={state.inputValue}
               // eslint-disable-next-line jsx-a11y/no-autofocus
@@ -94,7 +97,7 @@ export const Main: FC = (): ReactElement => {
 
           <div className="search__button">
             <button type="submit" onClick={onClickHandler}>
-              {state.inputValue === '' ? 'Мне лень' : 'Найти'}
+              {state.inputValue === '' ? words.IM_LAZY : words.TO_FIND}
             </button>
           </div>
         </form>

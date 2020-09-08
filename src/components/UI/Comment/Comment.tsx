@@ -11,6 +11,9 @@ import bodyToMarkdown from './utils';
 import { CommentType, CommentState } from '../../../TypeScript/UI/Comment/Comment';
 import { CommentElement } from '../../../TypeScript/Pages/Issue/Issue';
 
+// Words
+import words from '../../../words';
+
 export const Comment: FC<CommentType> = (props: CommentType): ReactElement => {
   const [state, setState] = useState<CommentState>({ items: [] });
   useEffect(() => {
@@ -32,7 +35,7 @@ export const Comment: FC<CommentType> = (props: CommentType): ReactElement => {
                 </a>
               </b>
               {' '}
-              оставил комментарий
+              {words.LEAVE_A_COMMENT}
               {' '}
               {utils.formatDate(item.created_at) as string}
             </div>

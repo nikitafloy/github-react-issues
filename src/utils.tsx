@@ -3,6 +3,7 @@ import TimeAgo from 'javascript-time-ago';
 // eslint-disable-next-line import/no-unresolved
 import ru from 'javascript-time-ago/locale/ru';
 import { markdownPostQueryData, markdownPostQueryConfig } from './TypeScript/utils';
+import words from './words';
 
 TimeAgo.addLocale(ru);
 
@@ -32,7 +33,7 @@ export default {
     // eslint-disable-next-line no-console
     console.log(`requestsCount: ${requestsCount}`);
     if (requestsCount > 100) {
-      throw new Error('Превышено количество запросов в рендере');
+      throw new Error(words.QUERIES_RENDER_LIMIT);
     }
     requestsCount += 1;
 

@@ -1,5 +1,4 @@
 // Github Markdown Query Types
-
 export type markdownPostQueryData = {
   text: string;
   mode: 'markdown';
@@ -13,7 +12,6 @@ export type markdownPostQueryConfig = {
 };
 
 // "AntiChildren" type
-
 export type antiChildren = {
   children?: never;
 };
