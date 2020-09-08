@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React, {
   useEffect, useState, FC, ReactElement,
 } from 'react';
@@ -27,17 +28,14 @@ export const Comment: FC<CommentType> = (props: CommentType): ReactElement => {
     <>
       {state.items.length ? (
         state.items.map((item, key) => (
-          <section key={key} className="Comment">
+          // eslint-disable-next-line react/no-array-index-key
+          <section key={`comment-${key}`} className="Comment">
             <div className="Comment__title">
-              <b>
-                <a href={item.html_url} target="_blank" rel="noopener noreferrer">
-                  {item.user.login}
-                </a>
-              </b>
-              {' '}
-              {words.LEAVE_A_COMMENT}
-              {' '}
-              {utils.formatDate(item.created_at) as string}
+              <a href={item.html_url} target="_blank" rel="noopener noreferrer">{item.user.login}</a>
+
+              {` ${words.LEAVE_A_COMMENT} `}
+
+              {utils.formatDate(item.created_at)}
             </div>
 
             <div className="Comment__body" dangerouslySetInnerHTML={{ __html: item.body }} />
@@ -46,14 +44,11 @@ export const Comment: FC<CommentType> = (props: CommentType): ReactElement => {
       ) : (
         <section className="Comment">
           <div className="Comment__title">
-            <div className="loading_100" />
+            {utils.randomLoadingArray(1)}
           </div>
 
           <div className="Comment__body">
-            <div className="loading_100" />
-            <div className="loading_100" />
-            <div className="loading_100" />
-            <div className="loading_100" />
+            {utils.randomLoadingArray(3)}
           </div>
         </section>
       )}

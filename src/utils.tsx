@@ -1,3 +1,5 @@
+import React, { ReactElement } from 'react';
+
 // Axios
 import axios, { AxiosResponse } from 'axios';
 
@@ -75,4 +77,6 @@ export default {
   randomArray: (): never[] => Array.from({
     length: 5 + Math.floor(min + Math.random() * (max + 1 - min)),
   }),
+
+  randomLoadingArray: (length: number): Array<ReactElement> => Array.from({ length: length < 1 ? 1 : length }, (_, k) => (<div key={`loading-${k}`} className="loading_100" />)),
 };

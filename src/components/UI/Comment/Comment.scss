@@ -8,6 +8,10 @@ $third_step_width: 730px;
     &__title {
         background: #414856;
         padding: 10px;
+
+        a {
+            font-weight: bold;
+        };
     };
 
     &__body {

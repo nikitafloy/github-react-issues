@@ -145,11 +145,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
     // eslint-disable-next-line react/no-danger
     if (state.body) return <div className="header__body" dangerouslySetInnerHTML={{ __html: state.body }} />;
 
-    return (
-      <div className="header__body">
-        {Array.from({ length: 6 }, (_, k) => (<div key={`loading-${k}`} className="loading_100" />))}
-      </div>
-    );
+    return <div className="header__body">{(utils.randomLoadingArray(1))}</div>;
   };
 
   const renderCommentsExist = (): string | ReactElement => {
