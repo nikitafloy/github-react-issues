@@ -1,5 +1,11 @@
 import React, {
-  useState, useEffect, ChangeEvent, FormEvent, useRef, FC, ReactElement,
+  useState,
+  useEffect,
+  ChangeEvent,
+  FormEvent,
+  useRef,
+  FC,
+  ReactElement,
 } from 'react';
 
 // CSS
@@ -33,7 +39,7 @@ export const Main: FC = (): ReactElement => {
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
     const inputValue: string = event.target.value;
-    let params: IState = { ...state, inputValue, git: { } };
+    let params: IState = { ...state, inputValue, git: {} };
     const matchInputUrl: RegExpMatchArray | null = inputValue.match(
       /(https|http):\/\/github.com\/(.*)\/(.*)\/issues/,
     );

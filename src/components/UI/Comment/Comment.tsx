@@ -1,8 +1,5 @@
 import React, {
-  useEffect,
-  useState,
-  FC,
-  ReactElement,
+  useEffect, useState, FC, ReactElement,
 } from 'react';
 import './Comment.scss';
 

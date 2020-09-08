@@ -1,8 +1,5 @@
 import React, {
-  useEffect,
-  useState,
-  FC,
-  ReactElement,
+  useEffect, useState, FC, ReactElement,
 } from 'react';
 import './Issue.scss';
 import axios, { AxiosResponse, AxiosPromise } from 'axios';
@@ -40,7 +37,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
   const { history } = props;
 
   useEffect(() => {
-    (async (): Promise<void|undefined|never> => {
+    (async (): Promise<void | undefined | never> => {
       try {
         const issueResponse: AxiosResponse = await axios.get<AxiosPromise>(ISSUES_URL);
         if (issueResponse) {
@@ -136,7 +133,6 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
       <main className="Issue">
         <article className="header">
           <div className="header__title">
-
             {renderLabels()}
 
             <div className="header__title__username">
@@ -223,11 +219,15 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
             <div className="header__comments__to-issue">
               {
                 // eslint-disable-next-line no-nested-ternary
-                title
-                  ? state.comments_active
-                    ? 'Комментарии к проблеме'
-                    : 'Комментариев нет'
-                  : <div className="loading_220" />
+                title ? (
+                  state.comments_active ? (
+                    'Комментарии к проблеме'
+                  ) : (
+                    'Комментариев нет'
+                  )
+                ) : (
+                  <div className="loading_220" />
+                )
               }
             </div>
 
