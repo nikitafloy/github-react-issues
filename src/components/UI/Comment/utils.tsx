@@ -41,7 +41,7 @@ export default async (props: CommentType): Promise<Array<CommentElement>> => awa
       created_at: item.created_at,
       body:
           typeof data === 'string'
-            ? (replaceTags(data, props.gProps.match.params) as string)
+            ? replaceTags(data, props.gProps.match.params)
             : item.body,
     };
   }),
