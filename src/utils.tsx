@@ -1,8 +1,15 @@
+// Axios
 import axios, { AxiosResponse, AxiosPromise } from 'axios';
+
+// Time Ago
 import TimeAgo from 'javascript-time-ago';
 // eslint-disable-next-line import/no-unresolved
 import ru from 'javascript-time-ago/locale/ru';
+
+// TypeScript
 import { markdownPostQueryData, markdownPostQueryConfig } from './TypeScript/utils';
+
+// Words
 import words from './words';
 
 TimeAgo.addLocale(ru);
