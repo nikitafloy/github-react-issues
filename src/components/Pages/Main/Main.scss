@@ -93,11 +93,10 @@ $transition_box_shadow: box-shadow .15s ease-in;
             width: 100%;
             overflow-y: auto;
             max-width: 1000px;
-        };
 
-        .results {
-            background: $blue;
-            margin: 0 auto;
+            .results {
+                background: $blue;
+            };    
         };
     };
 };
