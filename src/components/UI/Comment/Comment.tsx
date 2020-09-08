@@ -24,6 +24,18 @@ export const Comment: FC<CommentType> = (props: CommentType): ReactElement => {
     })();
   }, [props]);
 
+  const renderLoadingTemplate = (): ReactElement => (
+    <section className="Comment">
+      <div className="Comment__title">
+        {utils.randomLoadingArray(1)}
+      </div>
+
+      <div className="Comment__body">
+        {utils.randomLoadingArray(3)}
+      </div>
+    </section>
+  );
+
   return (
     <>
       {state.items.length ? (
@@ -41,17 +53,7 @@ export const Comment: FC<CommentType> = (props: CommentType): ReactElement => {
             <div className="Comment__body" dangerouslySetInnerHTML={{ __html: item.body }} />
           </section>
         ))
-      ) : (
-        <section className="Comment">
-          <div className="Comment__title">
-            {utils.randomLoadingArray(1)}
-          </div>
-
-          <div className="Comment__body">
-            {utils.randomLoadingArray(3)}
-          </div>
-        </section>
-      )}
+      ) : renderLoadingTemplate()}
     </>
   );
 };
