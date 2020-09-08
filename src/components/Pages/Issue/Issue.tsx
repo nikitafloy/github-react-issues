@@ -37,13 +37,13 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
     },
   } = props;
 
-  const ISSUES_URL = `https://api.github.com/repos/${owner}/${repo}/issues/${id}`;
   const [issueState, setState] = useState<IssueState>({});
   const { history } = props;
 
   useEffect(() => {
     (async (): Promise<void | undefined | never> => {
       try {
+        const ISSUES_URL = `https://api.github.com/repos/${owner}/${repo}/issues/${id}`;
         const issueResponse: AxiosResponse = await axios.get<AxiosPromise>(ISSUES_URL);
         if (issueResponse) {
           // Destructuring
@@ -114,7 +114,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
     })();
     // I or React dont know about destructuring (React ask props.history)
     // eslint-disable-next-line
-  }, [ISSUES_URL, history]);
+  }, [history]);
 
   const renderLabels = (): ReactElement | null => {
     const stateLabels = issueState.labels;
