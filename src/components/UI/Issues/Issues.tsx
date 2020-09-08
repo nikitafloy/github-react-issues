@@ -22,7 +22,8 @@ export const Issues: FC<IssuesProps & antiChildren> = ({
   return (
     <>
       {(issuesList as Array<StateItems>).map((item, key) => (
-        <div key={key} className={`Issues ${isScrolling ? 'scroll' : 'no-scroll'}`}>
+        // eslint-disable-next-line react/no-array-index-key
+        <div key={`issuesList ${key}`} className={`Issues ${isScrolling ? 'scroll' : 'no-scroll'}`}>
           <div className={`Issues__title ${loading ? 'loading_80' : ''}`}>
             {item && item.title ? (
               <NavLink to={`/issues/${username}/${repo}/${item.number}`}>{item.title}</NavLink>
