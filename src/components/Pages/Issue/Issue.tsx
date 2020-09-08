@@ -159,7 +159,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
 
   const onClickHandler = (): string | null => {
     // eslint-disable-next-line no-alert
-    if (issueState.title) return prompt(words.URL_CURRENT_PAGE, ISSUES_URL);
+    if (issueState.title) return prompt(words.URL_CURRENT_PAGE, window.location.href);
     return null;
   };
 
