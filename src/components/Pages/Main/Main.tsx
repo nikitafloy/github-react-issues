@@ -20,12 +20,13 @@ import { Issues } from '../../UI/Issues/Issues';
 
 // Typescript
 import { MainState } from '../../../TypeScript/Pages/Main/State';
+import { antiChildren } from '../../../TypeScript/utils';
 
 // Words
 import words from '../../../words';
 
 const EXAMPLE_URL = 'https://github.com/negezor/vk-io/issues';
-export const Main: FC = (): ReactElement => {
+export const Main: FC<antiChildren> = (): ReactElement => {
   const wrapperRef = useRef<HTMLElement>(null);
   const [state, setState] = useState<MainState>({
     loading: false,

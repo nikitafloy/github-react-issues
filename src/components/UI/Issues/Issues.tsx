@@ -8,8 +8,9 @@ import utils from '../../../utils';
 // TypeScript
 import { IssuesProps } from '../../../TypeScript/UI/Issues/Issues';
 import { StateItems } from '../../../TypeScript/Pages/Main/State';
+import { antiChildren } from '../../../TypeScript/utils';
 
-export const Issues: FC<IssuesProps> = ({
+export const Issues: FC<IssuesProps & antiChildren> = ({
   username,
   repo,
   items,
