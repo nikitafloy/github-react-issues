@@ -1,5 +1,5 @@
 export type IssueType = {
-  login: string;
+  owner: string;
   repo: string;
   id: string;
 };

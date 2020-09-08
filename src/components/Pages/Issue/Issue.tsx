@@ -33,14 +33,12 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
 ): ReactElement => {
   const {
     match: {
-      params: { login, repo, id },
+      params: { owner, repo, id },
     },
   } = props;
 
-  const ISSUES_URL = `https://api.github.com/repos/${login}/${repo}/issues/${id}`;
-
-  const [state, setState] = useState<IssueState>({});
-  const { title } = state;
+  const ISSUES_URL = `https://api.github.com/repos/${owner}/${repo}/issues/${id}`;
+  const [issueState, setState] = useState<IssueState>({});
   const { history } = props;
 
   useEffect(() => {
@@ -119,7 +117,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
   }, [ISSUES_URL, history]);
 
   const renderLabels = (): ReactElement | null => {
-    const stateLabels = state.labels;
+    const stateLabels = issueState.labels;
     if (stateLabels) {
       if (stateLabels.length) {
         const labels: string = stateLabels.map((item: IssueLabels) => item.name).join(', ');
@@ -131,10 +129,10 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
   };
 
   const renderStatus = (): ReactElement | null => {
-    if (state.state === 'closed') {
+    if (issueState.state === 'closed') {
       return (
         <div className="header__status">
-          {state.closed_at ? `${words.ISSUE_CLOSED_AT} ${utils.formatDate(state.closed_at)}` : null}
+          {issueState.closed_at ? `${words.ISSUE_CLOSED_AT} ${utils.formatDate(issueState.closed_at)}` : null}
         </div>
       );
     }
@@ -143,32 +141,32 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
 
   const renderBody = (): ReactElement => {
     // eslint-disable-next-line react/no-danger
-    if (state.body) return <div className="header__body" dangerouslySetInnerHTML={{ __html: state.body }} />;
+    if (issueState.body) return <div className="header__body" dangerouslySetInnerHTML={{ __html: issueState.body }} />;
 
     return <div className="header__body">{(utils.randomLoadingArray(6))}</div>;
   };
 
   const renderUsername = (): ReactElement => {
-    if (state.user) return <a href={state.user.html_url} target="_blank" rel="noopener noreferrer">{state.user.login}</a>;
+    if (issueState.user) return <a href={issueState.user.html_url} target="_blank" rel="noopener noreferrer">{issueState.user.login}</a>;
 
     return <div className="loading_60" />;
   };
 
   const renderCommentsCount = (): string | null => {
-    if (state.comments && typeof state.comments === 'number') return ` • ${state.comments} ${utils.formatWordEnd(state.comments, words.END_OF_WORDS.comments)}`;
+    if (issueState.comments && typeof issueState.comments === 'number') return ` • ${issueState.comments} ${utils.formatWordEnd(issueState.comments, words.END_OF_WORDS.comments)}`;
     return null;
   };
 
   const onClickHandler = (): string | null => {
     // eslint-disable-next-line no-alert
-    if (title) return prompt(words.URL_CURRENT_PAGE, ISSUES_URL);
+    if (issueState.title) return prompt(words.URL_CURRENT_PAGE, ISSUES_URL);
     return null;
   };
 
   const renderCommentsExist = (): ReactElement | string => {
     // Its ok, title loading with comments
-    if (title) {
-      if (state.comments_active) {
+    if (issueState.title) {
+      if (issueState.comments_active) {
         return words.COMMENTS_TO_ISSUE;
       }
       return words.NO_COMMENTS;
@@ -177,7 +175,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
   };
 
   const renderWhoWritePost = (): ReactElement => {
-    const { created_at, user } = state;
+    const { created_at, user } = issueState;
     if (user) {
       const { login, html_url } = user;
       return (
@@ -205,10 +203,10 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
             <div className="header__title__username">{renderUsername()}</div>
 
             <span className="header__title__self">
-              {title ? (
+              {issueState.title ? (
                 <>
-                  <h1>{title}</h1>
-                  <span className="header__title__self__number">{` #${state.number}`}</span>
+                  <h1>{issueState.title}</h1>
+                  <span className="header__title__self__number">{` #${issueState.number}`}</span>
                   <span className="header__title__self__comments">{renderCommentsCount()}</span>
                 </>
               ) : <div className="loading_80" />}
@@ -231,8 +229,8 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
 
             <div className="header__comments__to-issue">{renderCommentsExist()}</div>
 
-            {state.comments_active
-              ? <Comment items={state.comments_active} gProps={props} />
+            {issueState.comments_active
+              ? <Comment items={issueState.comments_active} gProps={props} />
               : null}
 
           </aside>
