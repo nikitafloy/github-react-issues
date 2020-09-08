@@ -122,7 +122,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
 
   const renderStatus = (): ReactElement | null => (state.state === 'closed' ? (
     <div className="header__status">
-      {state.closed_at ? `Вопрос закрыт ${utils.formatDate(state.closed_at)}` : null}
+      {state.closed_at ? `Вопрос закрыт ${utils.formatDate(state.closed_at) as string}` : null}
     </div>
   ) : null);
 

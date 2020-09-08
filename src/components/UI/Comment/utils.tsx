@@ -18,7 +18,7 @@ const replaceTags = (text: string, params: { login: string; repo: string }): str
       }
 
       // eslint-disable-next-line no-param-reassign
-      text = text.replace(m[0], `<a href="${item.replace_on}${m[1]}" target="_blank">${m[0]}</a>`);
+      text = text.replace(m[0], `<a href="${item.replaceOn}${m[1]}" target="_blank">${m[0]}</a>`);
       m = regex.exec(text);
     }
   });
