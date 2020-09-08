@@ -205,14 +205,13 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
             <div className="header__title__username">{renderUsername()}</div>
 
             <span className="header__title__self">
-              {title
-                ? (
-                  <>
-                    <h1>{title}</h1>
-                    <span className="header__title__self__number">{` #${state.number}`}</span>
-                    <span className="header__title__self__comments">{renderCommentsCount()}</span>
-                  </>
-                ) : <div className="loading_80" />}
+              {title ? (
+                <>
+                  <h1>{title}</h1>
+                  <span className="header__title__self__number">{` #${state.number}`}</span>
+                  <span className="header__title__self__comments">{renderCommentsCount()}</span>
+                </>
+              ) : <div className="loading_80" />}
             </span>
           </div>
 
@@ -230,9 +229,7 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
               </button>
             </div>
 
-            <div className="header__comments__to-issue">
-              {renderCommentsExist()}
-            </div>
+            <div className="header__comments__to-issue">{renderCommentsExist()}</div>
 
             {state.comments_active
               ? <Comment items={state.comments_active} gProps={props} />
