@@ -10,7 +10,7 @@ import { antiChildren } from './TypeScript/utils';
 
 export const App: FC<antiChildren> = (): ReactElement => (
   <Switch>
-    <Route path="/issues/:login/:repo/:id" exact component={Issue} />
+    <Route path="/issues/:owner/:repo/:id" exact component={Issue} />
     <Route path="/" exact component={Main} />
     <Redirect to="/" />
   </Switch>
