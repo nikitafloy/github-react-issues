@@ -145,10 +145,27 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
     // eslint-disable-next-line react/no-danger
     if (state.body) return <div className="header__body" dangerouslySetInnerHTML={{ __html: state.body }} />;
 
-    return <div className="header__body">{(utils.randomLoadingArray(1))}</div>;
+    return <div className="header__body">{(utils.randomLoadingArray(6))}</div>;
   };
 
-  const renderCommentsExist = (): string | ReactElement => {
+  const renderUsername = (): ReactElement => {
+    if (state.user) return <a href={state.user.html_url} target="_blank" rel="noopener noreferrer">{state.user.login}</a>;
+
+    return <div className="loading_60" />;
+  };
+
+  const renderCommentsCount = (): string | null => {
+    if (state.comments && typeof state.comments === 'number') return ` • ${state.comments} ${utils.formatWordEnd(state.comments, words.END_OF_WORDS.comments)}`;
+    return null;
+  };
+
+  const onClickHandler = (): string | null => {
+    // eslint-disable-next-line no-alert
+    if (title) return prompt(words.URL_CURRENT_PAGE, ISSUES_URL);
+    return null;
+  };
+
+  const renderCommentsExist = (): ReactElement | string => {
     // Its ok, title loading with comments
     if (title) {
       if (state.comments_active) {
@@ -160,26 +177,20 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
   };
 
   const renderWhoWritePost = (): ReactElement => {
-    const createdAt = state.created_at;
-    if (state.user) {
-      const { login, html_url } = state.user;
+    const { created_at, user } = state;
+    if (user) {
+      const { login, html_url } = user;
       return (
         <>
           <a href={html_url} target="_blank" rel="noopener noreferrer">{login}</a>
 
           {` ${words.WRITE_POST} `}
 
-          {createdAt ? (utils.formatDate(createdAt)) : null}
+          {created_at ? (utils.formatDate(created_at)) : null}
         </>
       );
     }
     return <div className="loading_320" />;
-  };
-
-  const onClickHandler = (): string | null => {
-    // eslint-disable-next-line no-alert
-    if (title) return prompt(words.URL_CURRENT_PAGE, ISSUES_URL);
-    return null;
   };
 
   return (
@@ -191,33 +202,15 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
           <div className="header__title">
             {renderLabels()}
 
-            <div className="header__title__username">
-              {state.user
-                ? (
-                  <a
-                    href={state.user.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {state.user.login}
-                  </a>
-                )
-                : <div className="loading_60" />}
-            </div>
+            <div className="header__title__username">{renderUsername()}</div>
 
             <span className="header__title__self">
               {title
                 ? (
                   <>
                     <h1>{title}</h1>
-
                     <span className="header__title__self__number">{` #${state.number}`}</span>
-
-                    <span className="header__title__self__comments">
-                      {state.comments
-                        ? ` • ${state.comments} ${utils.formatWordEnd(state.comments, words.END_OF_WORDS.comments)}`
-                        : null}
-                    </span>
+                    <span className="header__title__self__comments">{renderCommentsCount()}</span>
                   </>
                 ) : <div className="loading_80" />}
             </span>
@@ -228,16 +221,23 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
 
           <aside className="header__comments">
             <div className="header__comments__info">
-              <div className="header__comments__info__author">{renderWhoWritePost()}</div>
+              <div className="header__comments__info__author">
+                {renderWhoWritePost()}
+              </div>
 
               <button type="button" className="header__comments__info__url" onClick={onClickHandler}>
                 <img src={url} alt={words.URL_ON_ISSUE} />
               </button>
             </div>
 
-            <div className="header__comments__to-issue">{renderCommentsExist()}</div>
+            <div className="header__comments__to-issue">
+              {renderCommentsExist()}
+            </div>
 
-            {state.comments_active ? <Comment items={state.comments_active} gProps={props} /> : null}
+            {state.comments_active
+              ? <Comment items={state.comments_active} gProps={props} />
+              : null}
+
           </aside>
         </article>
       </main>
