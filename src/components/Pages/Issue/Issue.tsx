@@ -2,8 +2,12 @@ import React, {
   useEffect, useState, FC, ReactElement,
 } from 'react';
 import './Issue.scss';
-import axios, { AxiosResponse, AxiosPromise } from 'axios';
 import { RouteComponentProps } from 'react-router-dom';
+
+// Axios
+import axios, { AxiosResponse, AxiosPromise } from 'axios';
+
+// Utils
 import utils from '../../../utils';
 
 // Icons
