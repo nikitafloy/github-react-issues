@@ -17,11 +17,14 @@ import words from './words';
 // Constants
 import { constants, markdownData } from './constants';
 
+const AUTH_TOKEN = { constants };
+
 TimeAgo.addLocale(ru);
 const timeAgo = new TimeAgo('ru-RU');
 
 let requestsCount = 0;
 const [min, max] = [10, 30];
+
 export default {
   formatDate: (date: string): string => (timeAgo.format(Date.parse(date)) as string).toLowerCase(),
 
@@ -60,11 +63,11 @@ export default {
       };
 
       let config: markdownPostQueryConfig = {};
-      if (constants.AUTH_TOKEN) {
+      if (AUTH_TOKEN) {
         config = {
           ...config,
           headers: {
-            Authorization: `token ${constants.AUTH_TOKEN}`,
+            Authorization: `token ${AUTH_TOKEN}`,
           },
         };
       }
