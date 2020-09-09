@@ -28,6 +28,9 @@ import {
 // Words
 import words from '../../../words';
 
+// Constants
+import constants from '../../../constants';
+
 export const Issue: FC<RouteComponentProps<IssueType>> = (
   props: RouteComponentProps<IssueType>,
 ): ReactElement => {
@@ -43,8 +46,8 @@ export const Issue: FC<RouteComponentProps<IssueType>> = (
   useEffect(() => {
     (async (): Promise<void | undefined | never> => {
       try {
-        const ISSUES_URL = `https://api.github.com/repos/${owner}/${repo}/issues/${id}`;
-        const issueResponse: AxiosResponse = await axios.get<AxiosPromise>(ISSUES_URL);
+        const issueResponse: AxiosResponse = await axios
+          .get<AxiosPromise>(constants.ISSUES_API_URL(owner, repo, id) as string);
         if (issueResponse) {
           // Destructuring
 

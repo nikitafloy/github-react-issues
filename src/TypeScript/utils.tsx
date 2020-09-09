@@ -6,7 +6,7 @@ export type markdownPostQueryData = {
 };
 
 export type markdownPostQueryConfig = {
-  headers: {
+  headers?: {
     Authorization: string;
   };
 };

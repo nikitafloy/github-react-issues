@@ -14,6 +14,9 @@ import { markdownPostQueryData, markdownPostQueryConfig } from './TypeScript/uti
 // Words
 import words from './words';
 
+// Constants
+import constants from './constants';
+
 TimeAgo.addLocale(ru);
 const timeAgo = new TimeAgo('ru-RU');
 
@@ -52,18 +55,22 @@ export default {
     try {
       const data: markdownPostQueryData = {
         text: body,
-        mode: 'markdown',
-        context: 'none',
+        mode: constants.markdownData.MARKDOWN_MODE_DATA,
+        context: constants.markdownData.MARKDOWN_CONTEXT_DATA,
       };
 
-      const config: markdownPostQueryConfig = {
-        headers: {
-          Authorization: 'token e73a8674f86e66b6de244fe01f1c93a21edbcf23',
-        },
-      };
+      let config: markdownPostQueryConfig = {};
+      if (constants.AUTH_TOKEN) {
+        config = {
+          ...config,
+          headers: {
+            Authorization: `token ${constants.AUTH_TOKEN}`,
+          },
+        };
+      }
 
       const result: AxiosResponse = await axios.post(
-        'https://api.github.com/markdown',
+        constants.MARKDOWN_API_URL,
         data,
         config,
       );

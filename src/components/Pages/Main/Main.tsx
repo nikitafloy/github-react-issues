@@ -25,7 +25,10 @@ import { antiChildren } from '../../../TypeScript/utils';
 // Words
 import words from '../../../words';
 
-const EXAMPLE_URL = 'https://github.com/negezor/vk-io/issues';
+// Constants
+import constants from '../../../constants';
+
+const { EXAMPLE_URL } = constants;
 export const Main: FC<antiChildren> = (): ReactElement => {
   const wrapperRef = useRef<HTMLElement>(null);
   const [state, setState] = useState<MainState>({
@@ -60,7 +63,7 @@ export const Main: FC<antiChildren> = (): ReactElement => {
   };
 
   const onClickHandler = (): void | null => (state.inputValue === ''
-    ? setState({ ...state, inputValue: EXAMPLE_URL, git: { username: 'negezor', repo: 'vk-io' } })
+    ? setState({ ...state, inputValue: EXAMPLE_URL, git: { username: constants.EXAMPLE_USERNAME, repo: constants.EXAMPLE_REPO } })
     : null);
 
   const getIssuesData = (event: FormEvent<HTMLFormElement>): void => {
@@ -70,7 +73,7 @@ export const Main: FC<antiChildren> = (): ReactElement => {
       const { username, repo } = state.git;
       if (username && repo) {
         setState({ ...state, loading: true });
-        (axios(`https://api.github.com/repos/${username}/${repo}/issues`) as AxiosPromise)
+        (axios(constants.ISSUES_API_URL(username, repo) as string) as AxiosPromise)
           .then((res: AxiosResponse) => setState({ ...state, items: res.data, loading: false }))
           .catch((e: AxiosError) => {
             setState({ ...state, loading: false, items: undefined });
