@@ -11,6 +11,8 @@ export type markdownPostQueryConfig = {
   };
 };
 
+export type markdownApiUrl = 'https://api.github.com/markdown';
+
 // "AntiChildren" type
 export type antiChildren = {
   children?: never;

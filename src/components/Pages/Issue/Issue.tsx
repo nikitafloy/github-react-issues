@@ -29,7 +29,7 @@ import {
 import words from '../../../words';
 
 // Constants
-import constants from '../../../constants';
+import { constants } from '../../../constants';
 
 export const Issue: FC<RouteComponentProps<IssueType>> = (
   props: RouteComponentProps<IssueType>,

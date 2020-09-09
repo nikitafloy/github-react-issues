@@ -26,7 +26,7 @@ import { antiChildren } from '../../../TypeScript/utils';
 import words from '../../../words';
 
 // Constants
-import constants from '../../../constants';
+import { constants } from '../../../constants';
 
 const { EXAMPLE_URL } = constants;
 export const Main: FC<antiChildren> = (): ReactElement => {

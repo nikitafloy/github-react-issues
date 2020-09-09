@@ -9,13 +9,13 @@ import TimeAgo from 'javascript-time-ago';
 import ru from 'javascript-time-ago/locale/ru';
 
 // TypeScript
-import { markdownPostQueryData, markdownPostQueryConfig } from './TypeScript/utils';
+import { markdownPostQueryData, markdownPostQueryConfig, markdownApiUrl } from './TypeScript/utils';
 
 // Words
 import words from './words';
 
 // Constants
-import constants from './constants';
+import { constants, markdownData } from './constants';
 
 TimeAgo.addLocale(ru);
 const timeAgo = new TimeAgo('ru-RU');
@@ -55,8 +55,8 @@ export default {
     try {
       const data: markdownPostQueryData = {
         text: body,
-        mode: constants.markdownData.MARKDOWN_MODE_DATA,
-        context: constants.markdownData.MARKDOWN_CONTEXT_DATA,
+        mode: markdownData.MARKDOWN_MODE_DATA,
+        context: markdownData.MARKDOWN_CONTEXT_DATA,
       };
 
       let config: markdownPostQueryConfig = {};
@@ -70,7 +70,7 @@ export default {
       }
 
       const result: AxiosResponse = await axios.post(
-        constants.MARKDOWN_API_URL,
+        markdownData.MARKDOWN_API_URL as markdownApiUrl,
         data,
         config,
       );
