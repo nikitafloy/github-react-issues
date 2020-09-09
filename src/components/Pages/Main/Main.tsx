@@ -28,7 +28,14 @@ import words from '../../../words';
 // Constants
 import { constants } from '../../../constants';
 
-const { EXAMPLE_URL } = constants;
+const {
+  EXAMPLE_URL,
+  EXAMPLE_USERNAME,
+  EXAMPLE_REPO,
+  INPUT_GITHUB_URL_REGEXP,
+  ISSUES_API_URL,
+} = constants;
+
 export const Main: FC<antiChildren> = (): ReactElement => {
   const wrapperRef = useRef<HTMLElement>(null);
   const [state, setState] = useState<MainState>({
@@ -52,18 +59,16 @@ export const Main: FC<antiChildren> = (): ReactElement => {
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
     const inputValue: string = event.target.value;
     let params: MainState = { ...state, inputValue, git: {} };
-    const matchInputUrl: RegExpMatchArray | null = inputValue.match(
-      /(https|http):\/\/github.com\/(.*)\/(.*)\/issues/,
-    );
-    if (matchInputUrl) {
-      const [username, repo]: string[] = [matchInputUrl[2], matchInputUrl[3]];
+    const inputUrl: RegExpMatchArray | null = inputValue.match(INPUT_GITHUB_URL_REGEXP);
+    if (inputUrl) {
+      const [username, repo]: string[] = [inputUrl[2], inputUrl[3]];
       params = { ...params, git: { username, repo } };
     }
     setState(params);
   };
 
   const onClickHandler = (): void | null => (state.inputValue === ''
-    ? setState({ ...state, inputValue: EXAMPLE_URL, git: { username: constants.EXAMPLE_USERNAME, repo: constants.EXAMPLE_REPO } })
+    ? setState({ ...state, inputValue: EXAMPLE_URL, git: { username: EXAMPLE_USERNAME, repo: EXAMPLE_REPO } })
     : null);
 
   const getIssuesData = (event: FormEvent<HTMLFormElement>): void => {
@@ -73,7 +78,7 @@ export const Main: FC<antiChildren> = (): ReactElement => {
       const { username, repo } = state.git;
       if (username && repo) {
         setState({ ...state, loading: true });
-        (axios(constants.ISSUES_API_URL(username, repo) as string) as AxiosPromise)
+        (axios(ISSUES_API_URL(username, repo) as string) as AxiosPromise)
           .then((res: AxiosResponse) => setState({ ...state, items: res.data, loading: false }))
           .catch((e: AxiosError) => {
             setState({ ...state, loading: false, items: undefined });

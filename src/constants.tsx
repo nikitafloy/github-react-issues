@@ -4,6 +4,7 @@ const constants = {
   EXAMPLE_USERNAME: 'negezor',
   EXAMPLE_REPO: 'vk-io',
   AUTH_TOKEN: 'e73a8674f86e66b6de244fe01f1c93a21edbcf23',
+  INPUT_GITHUB_URL_REGEXP: /(https|http):\/\/github.com\/(.*)\/(.*)\/issues/,
 };
 
 enum markdownData {
