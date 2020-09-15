@@ -17,7 +17,7 @@ import words from './words';
 // Constants
 import { constants, markdownData } from './constants';
 
-const AUTH_TOKEN = { constants };
+const { AUTH_TOKEN } = constants;
 
 TimeAgo.addLocale(ru);
 const timeAgo = new TimeAgo('ru-RU');
@@ -63,19 +63,10 @@ export default {
       };
 
       let config: markdownPostQueryConfig = {};
-      if (AUTH_TOKEN) {
-        config = {
-          ...config,
-          headers: {
-            Authorization: `token ${AUTH_TOKEN}`,
-          },
-        };
-      }
+      if (AUTH_TOKEN) config = { ...config, headers: { Authorization: `token ${AUTH_TOKEN}` } };
 
       const result: AxiosResponse = await axios.post(
-        markdownData.MARKDOWN_API_URL as markdownApiUrl,
-        data,
-        config,
+        markdownData.MARKDOWN_API_URL as markdownApiUrl, data, config,
       );
 
       return result.data;
@@ -84,9 +75,8 @@ export default {
     }
   },
 
-  randomArray: (): never[] => Array.from({
-    length: 5 + Math.floor(min + Math.random() * (max + 1 - min)),
-  }),
+  randomArray: (): never[] => Array
+    .from({ length: 5 + Math.floor(min + Math.random() * (max + 1 - min)) }),
 
   randomLoadingArray: (length: number): Array<ReactElement> => Array.from({ length: length < 1 ? 1 : length }, (_, k) => (<div key={`loading-${k}`} className="loading_100" />)),
 };
