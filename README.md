@@ -3,8 +3,11 @@
 Выполненное тестовое - написать альтернативную версию github issues.
 
 
-Последний актуальный скриншот:
+## Стэк
 
-![xHXbJKz-LUXtJ5Ci_2DnXaw_dHZyEwwESeS6gSUFMaPqYPbWHl5D1c5cQrzMDgG9u0v7C3xjLeG9CfW5aJ9a-iIP](https://user-images.githubusercontent.com/31541586/183672628-48a7f89b-71cc-4ccc-86cf-3fb334b53097.jpg)
+TypeScript, React
 
 
+## Превью
+
+https://user-images.githubusercontent.com/31541586/183996012-68b14fac-67c8-475f-83d9-fd2ed4e4f7a1.mp4
